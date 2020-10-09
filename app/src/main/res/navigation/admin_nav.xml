@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/admin_nav"
+    app:startDestination="@id/adminHomePage">
+
+    <fragment
+        android:id="@+id/adminProfile"
+        android:name="com.shop.myshop.Admin.AdminProfile"
+        android:label="fragment_admin_profile"
+        tools:layout="@layout/fragment_admin_profile" >
+        <action
+            android:id="@+id/action_adminProfile_to_addCategories"
+            app:destination="@id/addCategories" />
+        <action
+            android:id="@+id/action_adminProfile_to_category"
+            app:destination="@id/category" />
+    </fragment>
+    <fragment
+        android:id="@+id/addCategories"
+        android:name="com.shop.myshop.Admin.AddCategories"
+        android:label="fragment_add_categories"
+        tools:layout="@layout/fragment_add_categories" >
+
+        <action
+            android:id="@+id/action_addCategories_to_category"
+            app:destination="@id/category" />
+        <argument
+            android:name="Category"
+            app:argType="com.shop.myshop.CategoryModel"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/addProduct"
+        android:name="com.shop.myshop.Admin.AddProduct"
+        android:label="fragment_add_product"
+        tools:layout="@layout/fragment_add_product" >
+        <action
+            android:id="@+id/action_addProduct_to_ads"
+            app:destination="@id/ads" />
+        <argument
+            android:name="product"
+            app:argType="com.shop.myshop.ProductsModel"
+            app:nullable="true" />
+        <argument
+            android:name="category"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminHomePage"
+        android:name="com.shop.myshop.Admin.AdminHomePage"
+        android:label="fragment_admin_home_page"
+        tools:layout="@layout/fragment_admin_home_page" />
+    <fragment
+        android:id="@+id/category"
+        android:name="com.shop.myshop.Category"
+        android:label="fragment_category"
+        tools:layout="@layout/fragment_category" >
+        <action
+            android:id="@+id/action_category_to_addProduct"
+            app:destination="@id/addProduct" />
+        <action
+            android:id="@+id/action_category_to_addCategories"
+            app:destination="@id/addCategories" />
+        <action
+            android:id="@+id/action_category_to_allProduct2"
+            app:destination="@id/allProduct" />
+        <argument
+            android:name="type"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/allProduct"
+        android:name="com.shop.myshop.Admin.AllProduct"
+        android:label="fragment_all_product"
+        tools:layout="@layout/fragment_all_product" >
+        <action
+            android:id="@+id/action_allProduct_to_addProduct"
+            app:destination="@id/addProduct" />
+        <action
+            android:id="@+id/action_allProduct_to_ads"
+            app:destination="@id/ads" />
+        <action
+            android:id="@+id/action_allProduct_to_addDeals"
+            app:destination="@id/addDeals" />
+        <argument
+            android:name="type"
+            app:argType="string" />
+        <argument
+            android:name="categoryId"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/ads"
+        android:name="com.shop.myshop.Admin.Ads"
+        android:label="fragment_ads"
+        tools:layout="@layout/fragment_ads" >
+        <argument
+            android:name="product"
+            app:argType="com.shop.myshop.ProductsModel" />
+    </fragment>
+    <fragment
+        android:id="@+id/addDeals"
+        android:name="com.shop.myshop.Admin.AddDeals"
+        android:label="fragment_add_deals"
+        tools:layout="@layout/fragment_add_deals" >
+        <argument
+            android:name="product"
+            app:argType="com.shop.myshop.ProductsModel" />
+    </fragment>
+</navigation>

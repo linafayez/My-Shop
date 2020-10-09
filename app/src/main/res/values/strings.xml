@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">My Shop</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="see_all">See All</string>
+    <string name="up">Sign Up</string>
+    <string name="sign_in">Sign In</string>
+    <string name="forgotPass">Enter your registered email below to receive password rest instruction.</string>
+    <string name="newProduct">New Product</string>
+    <string name="newCategory">new Category</string>
+    <string name="edit_or_delete_product">edit or delete product</string>
+</resources>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainPage">
+
+
+    <fragment
+        android:id="@+id/mainPage"
+        android:name="com.shop.myshop.User.MainPage"
+        android:label="fragment_main_page"
+        tools:layout="@layout/fragment_main_page">
+        <action
+            android:id="@+id/action_mainPage_to_productView"
+            app:destination="@id/productView" />
+        <action
+            android:id="@+id/action_mainPage_to_products"
+            app:destination="@id/products" />
+    </fragment>
+    <fragment
+        android:id="@+id/myCart"
+        android:name="com.shop.myshop.User.MyCart"
+        android:label="fragment_my_cart"
+        tools:layout="@layout/fragment_my_cart" />
+    <fragment
+        android:id="@+id/userCategory"
+        android:name="com.shop.myshop.User.UserCategory"
+        android:label="fragment_user_category"
+        tools:layout="@layout/fragment_user_category" >
+        <action
+            android:id="@+id/action_userCategory_to_products"
+            app:destination="@id/products" />
+    </fragment>
+    <fragment
+        android:id="@+id/productView"
+        android:name="com.shop.myshop.User.ProductView"
+        android:label="fragment_product_view"
+        tools:layout="@layout/fragment_product_view" >
+        <argument
+            android:name="product"
+            app:argType="com.shop.myshop.ProductsModel" />
+    </fragment>
+    <fragment
+        android:id="@+id/products"
+        android:name="com.shop.myshop.User.Products"
+        android:label="fragment_products"
+        tools:layout="@layout/fragment_products" >
+        <action
+            android:id="@+id/action_products_to_productView"
+            app:destination="@id/productView" />
+        <argument
+            android:name="categoryId"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="type"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+</navigation>
