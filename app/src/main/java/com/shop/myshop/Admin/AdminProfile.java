@@ -12,15 +12,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.shop.myshop.CategoryDirections;
 import com.shop.myshop.MainActivity;
 import com.shop.myshop.R;
 import com.shop.myshop.StartPage;
+import com.shop.myshop.UserInfo;
 
 public class AdminProfile extends Fragment {
     Button AddCategory,AddProduct, editProduct,editCategory, logOut, Ads, deals;
+    TextView name, phone;
     public AdminProfile() {
         // Required empty public constructor
     }
@@ -35,7 +42,9 @@ public class AdminProfile extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final Bundle bundle = new Bundle();
+      //  FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        name = view.findViewById(R.id.textView6);
+        phone = view.findViewById(R.id.textView7);
         deals = view.findViewById(R.id.deals);
         logOut = view.findViewById(R.id.out);
         logOut.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +100,15 @@ public class AdminProfile extends Fragment {
              goToCategory("deals");
             }
         });
+//        FirebaseFirestore.getInstance().collection("User").document(currentUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+//            @Override
+//            public void onSuccess(DocumentSnapshot documentSnapshot) {
+//                UserInfo user = documentSnapshot.toObject(UserInfo.class);
+//                name.setText(user.getName());
+//
+//            }
+//        });
+                //.whereEqualTo("type","Admin").
     }
 
     private void goToCategory(String type) {

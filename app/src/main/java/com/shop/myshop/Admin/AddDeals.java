@@ -1,13 +1,6 @@
 package com.shop.myshop.Admin;
 
-import android.app.PendingIntent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +11,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 import com.shop.myshop.ProductsModel;
 import com.shop.myshop.R;
+import com.shop.myshop.util.TextViewUtil;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
@@ -74,9 +73,9 @@ product = AddDealsArgs.fromBundle(getArguments()).getProduct();
          @Override
          public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
              if(event == null || !event.isShiftPressed()) {
-                 dis = Integer.parseInt(discount.getText().toString());
-                  pr-= pr*(dis/100.0);
-                 newPrice.setText(df2.format(pr)+"JD");
+//                 dis = Integer.parseInt(discount.getText().toString());
+//                  pr-= pr*(dis/100.0);
+                 newPrice.setText(TextViewUtil.getDiscountToDisplay(product.getPrice(),dis,1));
                  return true;
              }else {
                  return false;

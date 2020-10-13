@@ -3,17 +3,17 @@ package com.shop.myshop.User;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.shop.myshop.ProductsModel;
@@ -27,8 +27,9 @@ public class ProductView extends Fragment {
 Gson gson;
 ProductsModel product;
     LinearLayout imageGallery;
-    TextView name,price, desc;
+    TextView name,price, desc, newPrice;
     ArrayList<Uri> mArrayUri = new ArrayList<Uri>();
+    Button addToCart;
     public ProductView() {
         // Required empty public constructor
     }
@@ -46,17 +47,33 @@ ProductsModel product;
         imageGallery = (LinearLayout) view.findViewById(R.id.imageGallery);
         product = ProductViewArgs.fromBundle(getArguments()).getProduct();
           name= view.findViewById(R.id.name);
+          addToCart = view.findViewById(R.id.add);
        name.setText(product.getName());
        price= view.findViewById(R.id.price);
-       price.setText(TextViewUtil.getPriceToDisplay(product.getPrice()));
+       price.setText(TextViewUtil.getPriceToDisplay(product.getPrice(),1));
+        newPrice = view.findViewById(R.id.newPrice);
+        if(product.getDiscount() != 0){
+           newPrice.setText(TextViewUtil.getDiscountToDisplay(product.getPrice(),product.getDiscount(),1));
+        }else{
+              newPrice.setVisibility(View.INVISIBLE);
+        }
      desc = view.findViewById(R.id.desc);
      desc.setText(product.getDesc());
         for (int i=0;i<product.getPic().size();i++){
             mArrayUri.add(Uri.parse(product.getPic().get(i)));
         }
      setImage(mArrayUri);
+        addToCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Products.Cart.AddToCart(getContext(),product);
+            }
+        });
 
     }
+
+
+
     private View getImageView(Uri image) {
         ImageView imageView = new ImageView(getContext());
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(Resources.getSystem().getDisplayMetrics().widthPixels, ViewGroup.LayoutParams.MATCH_PARENT);

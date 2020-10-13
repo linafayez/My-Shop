@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,14 +36,14 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class MainPage extends Fragment {
-public Button allPro;
-RecyclerView ads, lastPro;
+public Button allPro, allDeals;
+RecyclerView ads, lastPro, lastDeals;
 LinearLayout imageGallery;
     AdsAdapter adapter;
     LastProductAdapter ProAdapter;
 Gson gson;
 ProductsModel product;
-ArrayList<ProductsModel> lastProList;
+ArrayList<ProductsModel> lastProList, lastDealsProducts;
 ArrayList<AdsModel> adsList;
      Bundle bundle;
     ArrayList<ImageView> im= new ArrayList<>();
@@ -64,18 +65,26 @@ ArrayList<AdsModel> adsList;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        bundle = new Bundle();
-        adsList = new ArrayList<>();
-        lastProList = new ArrayList<>();
-        lastPro = view.findViewById(R.id.recyclerView);
         super.onViewCreated(view, savedInstanceState);
-        gson = new Gson();
+      //  bundle = new Bundle();
+        adsList = new ArrayList<>();
+        lastDealsProducts = new ArrayList<>();
+        lastProList = new ArrayList<>();
+        allDeals = view.findViewById(R.id.button6);
+        lastPro = view.findViewById(R.id.recyclerView);
+        lastDeals = view.findViewById(R.id.recyclerView2);
         allPro = view.findViewById(R.id.all);
         ads = view.findViewById(R.id.switchImage);
         allPro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             Navigation.findNavController(getView()).navigate(MainPageDirections.actionMainPageToProducts(null,"lastProduct"));
+             Navigation.findNavController(getView()).navigate(MainPageDirections.actionMainPageToProducts(null,"lastProduct",null));
+            }
+        });
+        allDeals.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(getView()).navigate(MainPageDirections.actionMainPageToProducts(null,"lastDeals",null));
             }
         });
         FirebaseFirestore.getInstance().collection("Ads").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -101,11 +110,27 @@ ArrayList<AdsModel> adsList;
                         lastProList.add(document.toObject(ProductsModel.class));
                     }
                     ProAdapter = new LastProductAdapter(getContext(),lastProList);
-                    Toast.makeText(getContext(),""+lastProList.size(),Toast.LENGTH_LONG).show();
-                    RecyclerView.LayoutManager manager =new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false);
-                    lastPro.setLayoutManager(manager);
+                   // RecyclerView.LayoutManager manager =new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false);
+                    RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+                    lastPro.setLayoutManager(layoutManager);
                     lastPro.setHasFixedSize(false);
                     lastPro.setAdapter(ProAdapter);
+                }
+            }
+        });
+        FirebaseFirestore.getInstance().collection("Products").whereGreaterThan("discount",0).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        lastDealsProducts.add(document.toObject(ProductsModel.class));
+                    }
+                    ProAdapter = new LastProductAdapter(getContext(),lastDealsProducts);
+                  RecyclerView.LayoutManager manager =new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false);
+                //    RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+                    lastDeals.setLayoutManager(manager);
+                    lastDeals.setHasFixedSize(false);
+                    lastDeals.setAdapter(ProAdapter);
                 }
             }
         });

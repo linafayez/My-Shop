@@ -91,6 +91,10 @@
             android:name="categoryId"
             app:argType="string"
             app:nullable="true" />
+        <argument
+            android:name="categoryName"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/ads"

@@ -16,13 +16,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.shop.myshop.ProductsModel;
 import com.shop.myshop.R;
 import com.shop.myshop.SharedPreference;
+import com.shop.myshop.util.TextViewUtil;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
-ArrayList<ProductsModel> productsModels;
+  ArrayList<ProductsModel> productsModels;
     DecimalFormat df2 = new DecimalFormat("#.##");
 Context context;
  public CartAdapter(Context context,ArrayList<ProductsModel> productsModels){
@@ -43,29 +44,39 @@ this.productsModels = productsModels;
         if(P.getItemNumberInCart() == 0){
             P.setItemNumberInCart(1);
         }
-        holder.ItemsCount.setText(""+P.getItemNumberInCart());
-        double   price = Double.valueOf(P.getPrice()/100.0);
         int number = P.getItemNumberInCart();
-        holder.price.setText(df2.format(price*number)+"JD");
+
+        holder.ItemsCount.setText(""+number);
+        //double   price = P.getPrice();
+        if(P.getDiscount() != 0){
+            holder.newPrice.setText(TextViewUtil.getDiscountToDisplay(P.getPrice(),P.getDiscount(),number));
+            holder.price.setText(TextViewUtil.getOldPrice(P.getPrice(),number));
+        }else{
+            holder.price.setText(TextViewUtil.getPriceToDisplay(P.getPrice(),number));
+            holder.newPrice.setVisibility(View.INVISIBLE);
+        }
         holder.name.setText(P.getName());
         Picasso.get().load(Uri.parse(P.getPic().get(0))).into(holder.image);
     }
 
     @Override
     public int getItemCount() {
-        return productsModels.size();
+         if(productsModels==null){
+             return 0;
+         }else{
+           return   productsModels.size();
+         }
     }
 
     public class CartViewHolder extends RecyclerView.ViewHolder {
 
-        TextView price , ItemsCount ;
-        TextView name;
+        TextView price , ItemsCount ,name, newPrice;
         ImageView image , del;
         Button dec, inc;
        SharedPreference sharedPreference = new SharedPreference(context);
         public CartViewHolder(@NonNull final View itemView) {
             super(itemView);
-
+newPrice = itemView.findViewById(R.id.newPrice);
             price = (TextView) itemView.findViewById(R.id.price);
             name =(TextView) itemView.findViewById(R.id.name);
             image = (ImageView) itemView.findViewById(R.id.productImage);
@@ -82,11 +93,21 @@ this.productsModels = productsModels;
                         ItemsCount.setText(++a +"");
                         ProductsModel productModel =productsModels.get(getAdapterPosition());
                         productModel.setItemNumberInCart(a);
-                        productsModels.set(getAdapterPosition(),productModel);
-                        Double p = productModel.getPrice()/100.0*a;
-                        price.setText(df2.format(p)+"JD");
+                        //productsModels.set(getAdapterPosition(),productModel);
+                       // Double p = productModel.getPrice()/100.0;
                         sharedPreference.SaveCart(productsModels);
-                        c.total(productModel.getPrice());
+                        if(productModel.getDiscount()!=0) {
+//                            p -= p * (productModel.getDiscount() / 100.0);
+//                            p= Double.parseDouble(df2.format(p));
+                            newPrice.setText(TextViewUtil.getDiscountToDisplay(productModel.getPrice(),productModel.getDiscount(),a));
+                            price.setText(TextViewUtil.getOldPrice(productModel.getPrice(),a));
+                        }else {
+                            price.setText(TextViewUtil.getPriceToDisplay(productModel.getPrice(),a));
+                        }
+                        //    c.total(p);
+                        c.setTotal(productsModels);
+
+
                     }
                 }
             });
@@ -98,11 +119,19 @@ this.productsModels = productsModels;
                         ItemsCount.setText(--a +"");
                         ProductsModel productModel =productsModels.get(getAdapterPosition());
                         productModel.setItemNumberInCart(a);
-                        productsModels.set(getAdapterPosition(),productModel);
-                        Double p = productModel.getPrice()/100.0*a;
-                        price.setText(df2.format(p)+"JD");
+                       // Double p = productModel.getPrice()/100.0;
                         sharedPreference.SaveCart(productsModels);
-                        c.total(-productModel.getPrice());
+                        if(productModel.getDiscount()!=0) {
+                            //p -= p * (productModel.getDiscount() / 100.0);
+
+                            newPrice.setText(TextViewUtil.getDiscountToDisplay(productModel.getPrice(),productModel.getDiscount(),a));
+                            price.setText(TextViewUtil.getOldPrice(productModel.getPrice(),a));
+                        }else {
+                            price.setText(TextViewUtil.getPriceToDisplay(productModel.getPrice(),a));
+                        }
+                      //  c.total(-p);
+                        c.setTotal(productsModels);
+
 
                     }
                 }
@@ -110,12 +139,16 @@ this.productsModels = productsModels;
             del.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ProductsModel productModel =productsModels.get(getAdapterPosition());
-                    int a =Integer.parseInt(ItemsCount.getText().toString());
-                    double   pr = Double.valueOf(price.getText().toString().split("JD")[0]);
-                    c.total(-pr);
-                    productsModels.remove(productModel);
+//                    ProductsModel productModel =productsModels.get(getAdapterPosition());
+//                    int a =Integer.parseInt(ItemsCount.getText().toString());
+//                    double   pr = Double.valueOf(price.getText().toString().split("JD")[0]);
+//                    if(productModel.getDiscount()!=0){
+//                        pr = Double.valueOf(newPrice.getText().toString().split("JD")[0]);
+//                    }
+//                 //   c.total(-pr);
+                    productsModels.remove(productsModels.get(getAdapterPosition()));
                     sharedPreference.SaveCart(productsModels);
+                    c.setTotal(productsModels);
                     notifyDataSetChanged();
                     Toast.makeText(view.getContext(),"Item removed", Toast.LENGTH_SHORT).show();
                 }

@@ -2,6 +2,10 @@ package com.shop.myshop;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,15 +13,10 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 public class Category extends Fragment {
@@ -89,16 +88,17 @@ FirestoreRecyclerOptions<CategoryModel> options;
                @Override
                public void onClick(View v) {
                   String id = options.getSnapshots().get(getAdapterPosition()).getId();
+                  String name= options.getSnapshots().get(getAdapterPosition()).getName();
                        if (type.equals("newProduct")) {
                            goToAddProduct(id,null);
                     } else if (type.equals("editCategory")) {
                            editCategory(options.getSnapshots().get(getAdapterPosition()));
                              } else if(type.equals("editProduct")){
-                           toAllProduct(id,"editProduct");
+                           toAllProduct(id,"editProduct",name);
                        }else if(type.equals("Ads")){
-                           toAllProduct(id,"Ads");
+                           toAllProduct(id,"Ads",name);
                        }else if(type.equals("deals")){
-                           toAllProduct(id,"deals");
+                           toAllProduct(id,"deals",name);
                        }
                    }
 
@@ -107,8 +107,8 @@ FirestoreRecyclerOptions<CategoryModel> options;
         }
     }
 
-    private void toAllProduct(String id, String type) {
-        Navigation.findNavController(getView()).navigate(CategoryDirections.actionCategoryToAllProduct2(type,id));
+    private void toAllProduct(String id, String type,String name) {
+        Navigation.findNavController(getView()).navigate(CategoryDirections.actionCategoryToAllProduct2(type,id,name));
     }
 
 

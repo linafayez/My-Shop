@@ -22,7 +22,11 @@
         android:id="@+id/myCart"
         android:name="com.shop.myshop.User.MyCart"
         android:label="fragment_my_cart"
-        tools:layout="@layout/fragment_my_cart" />
+        tools:layout="@layout/fragment_my_cart" >
+        <action
+            android:id="@+id/action_myCart_to_checkOut"
+            app:destination="@id/checkOut" />
+    </fragment>
     <fragment
         android:id="@+id/userCategory"
         android:name="com.shop.myshop.User.UserCategory"
@@ -57,5 +61,14 @@
             android:name="type"
             app:argType="string"
             app:nullable="true" />
+        <argument
+            android:name="categoryName"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
+    <fragment
+        android:id="@+id/checkOut"
+        android:name="com.shop.myshop.User.checkOut"
+        android:label="fragment_check_out"
+        tools:layout="@layout/fragment_check_out" />
 </navigation>

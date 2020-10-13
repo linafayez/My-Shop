@@ -86,13 +86,11 @@ public class UserCategory extends Fragment {
         ImageView image;
         public CategoryHolder(@NonNull final View itemView) {
             super(itemView);
-            final Bundle bundle = new Bundle();
             image = itemView.findViewById(R.id.image);
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-              Navigation.findNavController(getView()).navigate(UserCategoryDirections.actionUserCategoryToProducts(options.getSnapshots().get(getAdapterPosition()).getId(),"view"));
+              Navigation.findNavController(getView()).navigate(UserCategoryDirections.actionUserCategoryToProducts(options.getSnapshots().get(getAdapterPosition()).getId(),"view",options.getSnapshots().get(getAdapterPosition()).getName()));
             }
 
             });

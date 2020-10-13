@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
@@ -16,8 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.gson.Gson;
 import com.shop.myshop.AdsModel;
+import com.shop.myshop.ProductsModel;
 import com.shop.myshop.R;
 import com.squareup.picasso.Picasso;
 
@@ -54,8 +53,8 @@ public class AdsAdapter extends RecyclerView.Adapter<AdsAdapter.AdsViewHolder> {
     public class AdsViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
         Bundle bundle = new Bundle();
-        Gson gson = new Gson();
-        public AdsViewHolder(@NonNull View itemView) {
+       // Gson gson = new Gson();
+        public AdsViewHolder(@NonNull final View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.adsImage);
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -64,9 +63,10 @@ public class AdsAdapter extends RecyclerView.Adapter<AdsAdapter.AdsViewHolder> {
                     FirebaseFirestore.getInstance().collection("Products").document(adsList.get(getAdapterPosition()).getId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            String Product = gson.toJson(documentSnapshot.getData());
-                            bundle.putString("product",Product);
-                            Navigation.createNavigateOnClickListener(R.id.action_mainPage_to_productView,bundle).onClick(v);
+                            //String Product = gson.toJson(documentSnapshot.getData());
+                          //  bundle.putString("product",Product);
+                          //  Navigation.createNavigateOnClickListener(R.id.action_mainPage_to_productView,bundle).onClick(v);
+                   Navigation.findNavController(itemView).navigate(MainPageDirections.actionMainPageToProductView( documentSnapshot.toObject(ProductsModel.class)));
                         }
                     });
                 }

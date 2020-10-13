@@ -1,54 +1,34 @@
 package com.shop.myshop.Admin;
 
-import android.Manifest;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.gson.Gson;
-import com.shop.myshop.Admin.AdminProfileDirections;
-import com.shop.myshop.Category;
-import com.shop.myshop.CategoryDirections;
-import com.shop.myshop.CategoryModel;
 import com.shop.myshop.ProductsModel;
 import com.shop.myshop.R;
-import com.shop.myshop.SharedPreference;
-import com.shop.myshop.Admin.AllProductArgs;
-import com.shop.myshop.Admin.AllProductDirections;
-import com.shop.myshop.UserInfo;
+import com.shop.myshop.User.Products;
+import com.shop.myshop.util.TextViewUtil;
 import com.squareup.picasso.Picasso;
-
-import java.util.Objects;
-
-import static android.app.Activity.RESULT_OK;
 
 public class AllProduct extends Fragment {
     RecyclerView recyclerView;
@@ -56,10 +36,11 @@ public class AllProduct extends Fragment {
     FirestoreRecyclerAdapter adapter;
     FirestoreRecyclerOptions<ProductsModel> options;
     Query query;
-    Uri ImageUri;
-    ImageView image;
-    String imageString;
-    Dialog Ads;
+    TextView productsType;
+//    Uri ImageUri;
+//    ImageView image;
+//    String imageString;
+//    Dialog Ads;
     public AllProduct() {
         // Required empty public constructor
     }
@@ -76,17 +57,23 @@ public class AllProduct extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         db = FirebaseFirestore.getInstance();
         recyclerView = view.findViewById(R.id.re);
+        productsType = view.findViewById(R.id.productsType);
        // Ads = new Dialog(getContext());
       //  Ads.setContentView(R.layout.ads);
-        Toast.makeText(getContext(), "s", Toast.LENGTH_LONG).show();
+      //  Toast.makeText(getContext(), "s", Toast.LENGTH_LONG).show();
       //  image = Ads.findViewById(R.id.adsImage);
         String type = AllProductArgs.fromBundle(getArguments()).getType();
-        if (!type.equals("lastProduct")) {
+        if (!type.equals("lastProduct") && !type.equals("lastDeals")) {
             String s = AllProductArgs.fromBundle(getArguments()).getCategoryId();
+            productsType.setText(AllProductArgs.fromBundle(getArguments()).getCategoryName());
              query = db.collection("Products").whereEqualTo("category_id",s).orderBy("category_id");
 
         } else {
             query = db.collection("Products");
+            productsType.setText(type);
+        }
+        if(type.equals("lastDeals")){
+            query = db.collection("Products").whereGreaterThan("discount",0);
         }
         options = new FirestoreRecyclerOptions.Builder<ProductsModel>()
                 .setQuery(query, ProductsModel.class)
@@ -104,8 +91,13 @@ public class AllProduct extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull ProductsHolders holder, int position, @NonNull ProductsModel model) {
               Picasso.get().load(Uri.parse(model.getPic().get(0))).into(holder.image);
-                holder.price.setText(model.getPrice() / 100.0 + "JD");
+                holder.price.setText(TextViewUtil.getPriceToDisplay(model.getPrice(),1));
                 holder.name.setText(model.getName());
+                if(model.getDiscount() != 0){
+                    holder.newPrice.setText(TextViewUtil.getDiscountToDisplay(model.getPrice(),model.getDiscount(),1));
+                }else{
+                    holder.newPrice.setVisibility(View.INVISIBLE);
+                }
             }
         };
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
@@ -138,20 +130,28 @@ public class AllProduct extends Fragment {
 
     class ProductsHolders extends RecyclerView.ViewHolder {
         ImageView image;
-        TextView name, price;
-
+        TextView name, price ,newPrice;
+       Button addToCart;
         public ProductsHolders(@NonNull final View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.imageView4);
             name = itemView.findViewById(R.id.name);
             price = itemView.findViewById(R.id.price);
+            addToCart = itemView.findViewById(R.id.add);
+            newPrice = itemView.findViewById(R.id.newPrice);
+            addToCart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                  //  options.getSnapshots().get(getAdapterPosition()).setItemNumberInCart(1);
+                    Products.Cart.AddToCart(getContext(),options.getSnapshots().get(getAdapterPosition()));
+                }
+            });
             final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
                 // final String s= getArguments().getString("type");
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     ProductsModel product = options.getSnapshots().get(getAdapterPosition());
-
                     onItemClick(product);
                                }
             });
@@ -170,7 +170,7 @@ public class AllProduct extends Fragment {
         }else if(type.equals("view")){
             //          Navigation.findNavController(getView()).navigate(AllProductDirections.actionAllProductToProductView2(product));
         }else if(type.equals("deals")){
-            //   Navigation.findNavController(getView()).navigate(AllProductDirections.actionAllProduct2ToAddDeals(product));
+           Navigation.findNavController(getView()).navigate(AllProductDirections.actionAllProductToAddDeals(product));
         }
     }
     private void goToAddProduct(ProductsModel product) {

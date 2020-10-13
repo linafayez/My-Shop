@@ -59,10 +59,10 @@ public class SharedPreference {
     }
     public void addToCart(ProductsModel product) {
         ArrayList<ProductsModel> productModelList = getCartData();
-
-
-
-        if (productModelList == null )
+        if(product.getItemNumberInCart()==0){
+            product.setItemNumberInCart(1);
+        }
+  if (productModelList == null )
             productModelList = new ArrayList<ProductsModel>();
         productModelList.add(product);
         SaveCart(productModelList);
