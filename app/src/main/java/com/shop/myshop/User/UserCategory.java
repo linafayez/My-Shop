@@ -43,8 +43,8 @@ public class UserCategory extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        db = FirebaseFirestore.getInstance();
         recyclerView = view.findViewById(R.id.categories);
+        db = FirebaseFirestore.getInstance();
         Query query = db.collection("Category");
         options = new FirestoreRecyclerOptions.Builder<CategoryModel>()
                 .setQuery(query,CategoryModel.class)

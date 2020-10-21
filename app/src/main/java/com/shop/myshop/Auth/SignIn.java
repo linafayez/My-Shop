@@ -39,7 +39,7 @@ import com.shop.myshop.UserInfo;
 public class SignIn extends Fragment  {
     Button login,signUp,restPass;
     private FirebaseAuth mAuth;
-    EditText email,password;
+    EditText email,password ;
     FirebaseFirestore db;
    // SharedPreference sharedPreference;
     public SignIn() {
@@ -66,8 +66,7 @@ public class SignIn extends Fragment  {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent done = new Intent(getActivity(), MainActivity.class);
-                    startActivity(done);
+                startSignIn();
             }
         });
         signUp = view.findViewById(R.id.button3);
@@ -100,40 +99,35 @@ public class SignIn extends Fragment  {
          });
         }
     }
-    private void updateUI(@Nullable final FirebaseUser user) {
+    private void updateUI(@Nullable FirebaseUser user) {
+
         if(user != null){
 
-        FirebaseFirestore.getInstance().collection("User").document(user.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                UserInfo userInfo = documentSnapshot.toObject(UserInfo.class);
-//                SharedPreference sharedPreference = new SharedPreference(getContext());
-//                sharedPreference.saveUser(userInfo);
-                if(userInfo.getType().equals("Admin")){
-                    Intent done = new Intent(getActivity(), AdminActivity.class);
-                    startActivity(done);
-                  //  getActivity().finish();
-                }else if(userInfo.getType().equals("User")) {
-                    Intent done = new Intent(getActivity(),MainActivity.class);
-                    startActivity(done);
-                //    getActivity().finish();
+            FirebaseFirestore.getInstance().collection("User").document(user.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    UserInfo userInfo = documentSnapshot.toObject(UserInfo.class);
+                    if(userInfo != null) {
+                        if (userInfo.getType().equals("Admin")) {
+                            Intent done = new Intent(getContext(), AdminActivity.class);
+                            startActivity(done);
+                        }
+                        if ("User".equals(userInfo.getType())) {
+                            Intent done = new Intent(getContext(), MainActivity.class);
+                            startActivity(done);
+                            //finish();
+                        }
+                    }
+
                 }
-
-
-            }
-        });
-
+            });
         }
     }
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        // Check if user is signed in (non-null) and update UI accordingly.
-//      FirebaseUser currentUser = mAuth.getCurrentUser();
-//      //  SharedPreference sharedPreference = new SharedPreference(getContext());
-//      //  UserInfo userInfo =sharedPreference.getUser();
-//     updateUI(currentUser);
-//    }
-
-
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        updateUI(currentUser);
+    }
 }

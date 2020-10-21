@@ -12,6 +12,7 @@
         android:icon="@drawable/ic_baseline_subject_24"
         android:title="Categories" />
     <item
+        android:id="@+id/orderUser"
         android:icon="@drawable/ic_baseline_local_shipping_24"
         android:title="Orders" />
     <item
@@ -20,6 +21,7 @@
         android:title="Cart" />
 
     <item
+        android:id="@+id/userProfile"
         android:icon="@drawable/ic_baseline_account_circle_24"
         android:title="Profile" />
 </menu>

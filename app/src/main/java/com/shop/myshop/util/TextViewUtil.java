@@ -3,7 +3,11 @@ package com.shop.myshop.util;
 import android.text.Html;
 import android.text.Spanned;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.shop.myshop.ProductsModel;
+import com.shop.myshop.UserInfo;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -38,5 +42,16 @@ public class TextViewUtil {
         }
           return sum;
     }
+    public static Spanned ItemsName(ArrayList<ProductsModel> data){
+        Spanned spanned =Html.fromHtml("<ul>");
+
+        for(int i=0;i < data.size();i++) {
+            spanned = Html.fromHtml(spanned.toString()+"<li>" + data.get(i).getName() + "</li>");
+        }
+
+        return spanned;
+
+    }
+
 
 }

@@ -11,7 +11,7 @@ public class UserInfo {
     private int age;
     private boolean isAdmin;
     private String email;
-    private int phone;
+    private String phone;
     UserInfo(String Name,String Id,String Type,String email){
         this.Name= Name;
         this.Type =Type;
@@ -84,11 +84,11 @@ public class UserInfo {
         this.isAdmin = admin;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 }

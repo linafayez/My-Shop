@@ -34,7 +34,7 @@ import java.util.concurrent.Executor;
 
 public class SignUp extends Fragment {
    Button login,signUp;
-    EditText email, password, ConPass, name;
+    EditText email, password, ConPass, name , phone;
    private FirebaseAuth mAuth;
     ProgressBar progressBar;
    UserInfo userdata = new UserInfo();
@@ -55,6 +55,8 @@ public class SignUp extends Fragment {
         super.onViewCreated(view, savedInstanceState);
        login = view.findViewById(R.id.button4);
         name = view.findViewById(R.id.editTextTextPersonName);
+        phone = view.findViewById(R.id.editTextPhone);
+
         mAuth = FirebaseAuth.getInstance();
         email = view.findViewById(R.id.editTextTextEmailAddress);
         password = view.findViewById(R.id.editTextTextPassword2);
@@ -82,14 +84,12 @@ public class SignUp extends Fragment {
         String p = password.getText().toString();
         String con = ConPass.getText().toString();
         String n = name.getText().toString();
-        if (TextUtils.isEmpty(e) || TextUtils.isEmpty(p) || TextUtils.isEmpty(con)|| TextUtils.isEmpty(n)) {
+        String ph = phone.getText().toString();
+        if (TextUtils.isEmpty(e) || TextUtils.isEmpty(p) || TextUtils.isEmpty(con)|| TextUtils.isEmpty(n) || TextUtils.isEmpty(ph) ) {
             Toast.makeText(getContext(), "fill the fields", Toast.LENGTH_LONG).show();
-
-
-
         } else {
             if (!p.equals(con)) {
-                Toast.makeText(getContext(), "the Password & cofirm Password should be same", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "the Password & confirm Password should be same", Toast.LENGTH_LONG).show();
 
             } else {
                 signUp.setVisibility(View.INVISIBLE);
@@ -103,7 +103,7 @@ public class SignUp extends Fragment {
                   @Override
                   public void onFailure(@NonNull Exception e) {
                       Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_LONG).show();
-                      name.setText("");
+                      phone.setText("");
                       email.setText("");
                       password.setText("");
                       ConPass.setText("");
@@ -119,14 +119,12 @@ public class SignUp extends Fragment {
         userdata.setId(user.getUid());
         userdata.setName(name.getText().toString());
         userdata.setType("User");
-
+        userdata.setPhone(phone.getText().toString());
         db.collection("User").document(user.getUid()).set(userdata).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Toast.makeText(getActivity(),"done",Toast.LENGTH_SHORT).show();
                 updateUI(user);
-             //   SharedPreference sharedPreference = new SharedPreference(getContext());
-              //  sharedPreference.saveUser(userdata);
             }
         });
 

@@ -42,7 +42,7 @@ public class AdminProfile extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-      //  FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         name = view.findViewById(R.id.textView6);
         phone = view.findViewById(R.id.textView7);
         deals = view.findViewById(R.id.deals);
@@ -100,14 +100,15 @@ public class AdminProfile extends Fragment {
              goToCategory("deals");
             }
         });
-//        FirebaseFirestore.getInstance().collection("User").document(currentUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-//            @Override
-//            public void onSuccess(DocumentSnapshot documentSnapshot) {
-//                UserInfo user = documentSnapshot.toObject(UserInfo.class);
-//                name.setText(user.getName());
-//
-//            }
-//        });
+        FirebaseFirestore.getInstance().collection("User").document(currentUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                UserInfo user = documentSnapshot.toObject(UserInfo.class);
+                name.setText(user.getName());
+                phone.setText(user.getPhone()+"");
+
+            }
+        });
                 //.whereEqualTo("type","Admin").
     }
 

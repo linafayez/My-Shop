@@ -5,6 +5,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
 
@@ -19,5 +20,7 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.bottomBar);
         NavController nav = Navigation.findNavController(this,R.id.nav_host);
         NavigationUI.setupWithNavController(bottomNav , nav);
+
     }
+
 }

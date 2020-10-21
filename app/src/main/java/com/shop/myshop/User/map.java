@@ -62,7 +62,9 @@ public class map extends AppCompatActivity implements OnMapReadyCallback {
             @Override
             public void onClick(View v) {
                 Intent returnIntent = new Intent();
-                returnIntent.putExtra("address",mMap.getCameraPosition().toString());
+                returnIntent.putExtra("Latitude", mMap.getCameraPosition().target.latitude);
+                returnIntent.putExtra("Longitude", mMap.getCameraPosition().target.longitude);
+               // returnIntent.putExtra("address",mMap.getCameraPosition().toString());
                 setResult(Activity.RESULT_OK,returnIntent);
                 finish();
             }

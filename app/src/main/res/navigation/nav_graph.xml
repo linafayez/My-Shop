@@ -74,11 +74,37 @@
         <action
             android:id="@+id/action_checkOut_to_map"
             app:destination="@id/map"
-            app:popUpTo="@id/checkOut" />
+            />
+        <action
+            android:id="@+id/action_checkOut_to_orderUser"
+            app:destination="@id/orderUser"
+
+            app:launchSingleTop="true"
+            app:popUpTo="@id/myCart"
+            app:popUpToInclusive="true" />
     </fragment>
     <activity
         android:id="@+id/map"
         android:name="com.shop.myshop.User.map"
         android:label="activity_map"
         tools:layout="@layout/activity_map" />
+    <fragment
+        android:id="@+id/orderUser"
+        android:name="com.shop.myshop.User.OrderUser"
+        android:label="fragment_order_user"
+        tools:layout="@layout/fragment_order_user" />
+    <fragment
+        android:id="@+id/userProfile"
+        android:name="com.shop.myshop.User.UserProfile"
+        android:label="fragment_user_profile"
+        tools:layout="@layout/fragment_user_profile" >
+        <action
+            android:id="@+id/action_userProfile_to_userInfoPage"
+            app:destination="@id/userInfoPage" />
+    </fragment>
+    <fragment
+        android:id="@+id/userInfoPage"
+        android:name="com.shop.myshop.User.UserInfoPage"
+        android:label="fragment_user_info_page"
+        tools:layout="@layout/fragment_user_info_page" />
 </navigation>
