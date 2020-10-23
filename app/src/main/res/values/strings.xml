@@ -9,4 +9,5 @@
     <string name="newProduct">New Product</string>
     <string name="newCategory">new Category</string>
     <string name="edit_or_delete_product">edit or delete product</string>
+    <string name="promo_code">Promo Code</string>
 </resources>

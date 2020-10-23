@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,6 +27,7 @@ import com.shop.myshop.StartPage;
 import com.shop.myshop.UserInfo;
 
 public class AdminProfile extends Fragment {
+    LinearLayout addPromoCode;
     Button AddCategory,AddProduct, editProduct,editCategory, logOut, Ads, deals;
     TextView name, phone;
     public AdminProfile() {
@@ -43,6 +45,7 @@ public class AdminProfile extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        addPromoCode = view.findViewById(R.id.addPromoCode);
         name = view.findViewById(R.id.textView6);
         phone = view.findViewById(R.id.textView7);
         deals = view.findViewById(R.id.deals);
@@ -51,9 +54,7 @@ public class AdminProfile extends Fragment {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
-               // Navigation.findNavController(getView()).navigateUp();
-                Intent out = new Intent(getActivity(), StartPage.class);
-                startActivity(out);
+                getActivity().finish();
             }
         });
         AddCategory = view.findViewById(R.id.newCategory);
@@ -110,6 +111,12 @@ public class AdminProfile extends Fragment {
             }
         });
                 //.whereEqualTo("type","Admin").
+        addPromoCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(getView()).navigate(R.id.action_adminProfile_to_addPromoCode);
+            }
+        });
     }
 
     private void goToCategory(String type) {

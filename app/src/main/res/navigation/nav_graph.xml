@@ -101,10 +101,18 @@
         <action
             android:id="@+id/action_userProfile_to_userInfoPage"
             app:destination="@id/userInfoPage" />
+        <action
+            android:id="@+id/action_userProfile_to_changePassword"
+            app:destination="@id/changePassword" />
     </fragment>
     <fragment
         android:id="@+id/userInfoPage"
         android:name="com.shop.myshop.User.UserInfoPage"
         android:label="fragment_user_info_page"
         tools:layout="@layout/fragment_user_info_page" />
+    <fragment
+        android:id="@+id/changePassword"
+        android:name="com.shop.myshop.User.ChangePassword"
+        android:label="fragment_change_password"
+        tools:layout="@layout/fragment_change_password" />
 </navigation>

@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_adminProfile_to_category"
             app:destination="@id/category" />
+        <action
+            android:id="@+id/action_adminProfile_to_addPromoCode"
+            app:destination="@id/addPromoCode" />
     </fragment>
     <fragment
         android:id="@+id/addCategories"
@@ -114,4 +117,9 @@
             android:name="product"
             app:argType="com.shop.myshop.ProductsModel" />
     </fragment>
+    <fragment
+        android:id="@+id/addPromoCode"
+        android:name="com.shop.myshop.Admin.AddPromoCode"
+        android:label="fragment_add_promo_code"
+        tools:layout="@layout/fragment_add_promo_code" />
 </navigation>
