@@ -1,4 +1,4 @@
-package com.shop.myshop.Admin;
+ package com.shop.myshop.Admin;
 
 import android.os.Bundle;
 
@@ -43,7 +43,6 @@ public class AddPromoCode extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         db = FirebaseFirestore.getInstance();
         id = db.collection("PromoCode").document().getId();
-
         PromoCode = view.findViewById(R.id.voucher);
         EndAfter = view.findViewById(R.id.EndDate);
 
@@ -54,7 +53,7 @@ public class AddPromoCode extends Fragment {
             public void onClick(View v) {
                 Add.setVisibility(View.INVISIBLE);
                // Toast.makeText(getContext(),PromoCode.getEditText().getText()+"",Toast.LENGTH_LONG).show();
-               promoCodeModel = new PromoCodeModel(id,Timestamp.now(),   new Timestamp(Timestamp.now().getSeconds()+Integer.parseInt(EndAfter.getEditText().getText().toString())*60*60,0),PromoCode.getEditText().getText().toString(),Integer.parseInt(Discount.getEditText().getText().toString()));
+               promoCodeModel = new PromoCodeModel(id,Timestamp.now(),   new Timestamp(Timestamp.now().getSeconds()+Integer.parseInt(EndAfter.getEditText().getText().toString())*60*60*24,0),PromoCode.getEditText().getText().toString(),Integer.parseInt(Discount.getEditText().getText().toString()));
                Upload(promoCodeModel);
 
             }

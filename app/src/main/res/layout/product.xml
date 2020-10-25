@@ -38,13 +38,12 @@
 
             <TextView
                 android:id="@+id/price"
-                android:layout_width="51dp"
+                android:layout_width="wrap_content"
                 android:layout_height="28dp"
                 android:layout_margin="2dp"
                 android:layout_marginBottom="8dp"
                 android:gravity="center"
                 android:text="10 JD"
-                android:textColor="#e80505"
                 android:textSize="15dp"
                 app:fontFamily="sans-serif-black"
                 app:layout_constraintBottom_toTopOf="@+id/linearLayout"
@@ -54,9 +53,10 @@
 
             <TextView
                 android:id="@+id/newPrice"
-                android:layout_width="64dp"
+                android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:text="TextView"
+                android:textColor="#e80505"
                 app:layout_constraintBottom_toTopOf="@+id/linearLayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.212"

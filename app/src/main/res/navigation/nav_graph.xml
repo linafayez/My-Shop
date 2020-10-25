@@ -109,7 +109,11 @@
         android:id="@+id/userInfoPage"
         android:name="com.shop.myshop.User.UserInfoPage"
         android:label="fragment_user_info_page"
-        tools:layout="@layout/fragment_user_info_page" />
+        tools:layout="@layout/fragment_user_info_page" >
+        <argument
+            android:name="user"
+            app:argType="com.shop.myshop.UserInfo" />
+    </fragment>
     <fragment
         android:id="@+id/changePassword"
         android:name="com.shop.myshop.User.ChangePassword"

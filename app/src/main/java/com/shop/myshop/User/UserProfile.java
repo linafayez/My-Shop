@@ -26,6 +26,7 @@ import com.shop.myshop.UserInfo;
 public class UserProfile extends Fragment {
     TextView name, phone;
     LinearLayout userInfo , LogOut , changePassword;
+    UserInfo user;
     public UserProfile() {
         // Required empty public constructor
     }
@@ -41,24 +42,26 @@ public class UserProfile extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         userInfo = view.findViewById(R.id.userInfo);
         LogOut = view.findViewById(R.id.LogOut);
-        userInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(getView()).navigate(R.id.action_userProfile_to_userInfoPage);
-            }
-        });
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        name = view.findViewById(R.id.textView6);
-        phone = view.findViewById(R.id.textView7);
         FirebaseFirestore.getInstance().collection("User").document(currentUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                UserInfo user = documentSnapshot.toObject(UserInfo.class);
+                user = documentSnapshot.toObject(UserInfo.class);
                 name.setText(user.getName());
                 phone.setText(user.getPhone()+"");
 
             }
         });
+        userInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(getView()).navigate(UserProfileDirections.actionUserProfileToUserInfoPage(user));
+            }
+        });
+
+        name = view.findViewById(R.id.textView6);
+        phone = view.findViewById(R.id.textView7);
+
         LogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

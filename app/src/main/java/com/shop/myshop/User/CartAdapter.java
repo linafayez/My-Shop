@@ -149,7 +149,7 @@ newPrice = itemView.findViewById(R.id.newPrice);
                     productsModels.remove(productsModels.get(getAdapterPosition()));
                     sharedPreference.SaveCart(productsModels);
                     c.setTotal(productsModels);
-                    notifyDataSetChanged();
+                   notifyDataSetChanged();
                     Toast.makeText(view.getContext(),"Item removed", Toast.LENGTH_SHORT).show();
                 }
             });

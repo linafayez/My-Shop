@@ -91,11 +91,12 @@ public class AllProduct extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull ProductsHolders holder, int position, @NonNull ProductsModel model) {
               Picasso.get().load(Uri.parse(model.getPic().get(0))).into(holder.image);
-                holder.price.setText(TextViewUtil.getPriceToDisplay(model.getPrice(),1));
                 holder.name.setText(model.getName());
                 if(model.getDiscount() != 0){
-                    holder.newPrice.setText(TextViewUtil.getDiscountToDisplay(model.getPrice(),model.getDiscount(),1));
+                    holder.price.setText(TextViewUtil.getDiscountToDisplay(model.getPrice(),model.getDiscount(),1));
+                    holder.newPrice.setText(TextViewUtil.getOldPrice(model.getPrice(),1));
                 }else{
+                    holder.price.setText(TextViewUtil.getPriceToDisplay(model.getPrice(),1));
                     holder.newPrice.setVisibility(View.INVISIBLE);
                 }
             }

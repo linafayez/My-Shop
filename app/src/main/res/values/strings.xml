@@ -10,4 +10,7 @@
     <string name="newCategory">new Category</string>
     <string name="edit_or_delete_product">edit or delete product</string>
     <string name="promo_code">Promo Code</string>
+    <string name="user_info">User Info</string>
+    <string name="phone_number">Phone number</string>
+    <string name="change_password">Change Password</string>
 </resources>

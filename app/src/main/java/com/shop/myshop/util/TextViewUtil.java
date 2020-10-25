@@ -3,9 +3,15 @@ package com.shop.myshop.util;
 import android.text.Html;
 import android.text.Spanned;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.functions.FirebaseFunctions;
+import com.google.firebase.functions.HttpsCallableResult;
 import com.shop.myshop.ProductsModel;
 import com.shop.myshop.UserInfo;
 
@@ -52,6 +58,7 @@ public class TextViewUtil {
         return spanned;
 
     }
+
 
 
 }

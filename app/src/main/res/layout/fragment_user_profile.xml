@@ -22,7 +22,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -52,7 +52,7 @@
                         android:padding="2dp"
                         android:text="Lina Taweel "
                         android:textColor="@color/colorPrimaryDark"
-                        android:textSize="20dp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@+id/profile_image"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -64,7 +64,7 @@
                         android:layout_marginStart="40dp"
                         android:gravity="center"
                         android:padding="2dp"
-                        android:text="Phone number"
+                        android:text="@string/phone_number"
                         android:textColor="@color/colorPrimary"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -98,15 +98,16 @@
                     android:layout_weight="2.55"
                     android:padding="6dp"
                     android:gravity="center_vertical"
-                   android:textSize="25dp"
-                    android:text="User Info" />
+                   android:textSize="25sp"
+                    android:text="@string/user_info" />
 
                 <ImageView
                     android:id="@+id/imageView7"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.25"
-                    android:src="@drawable/ic_baseline_arrow_forward_ios_24" />
+                    android:src="@drawable/ic_baseline_arrow_forward_ios_24"
+                    tools:ignore="ContentDescription" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -117,11 +118,11 @@
                 android:orientation="horizontal">
 
                 <ImageView
-
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:layout_weight="0.20"
-                    android:src="@drawable/ic_round_vpn_key_24" />
+                    android:src="@drawable/ic_round_vpn_key_24"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -129,8 +130,8 @@
                     android:layout_weight="2.55"
                     android:padding="6dp"
                     android:gravity="center_vertical"
-                    android:textSize="25dp"
-                    android:text="Change Password" />
+                    android:textSize="25sp"
+                    android:text="@string/change_password" />
 
                 <ImageView
                     android:layout_width="0dp"

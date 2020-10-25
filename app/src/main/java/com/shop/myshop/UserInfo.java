@@ -2,7 +2,9 @@ package com.shop.myshop;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class UserInfo {
+import java.io.Serializable;
+
+public class UserInfo implements Serializable {
     private FirebaseFirestore firestore ;
     private String Name;
     private String Id;

@@ -45,8 +45,10 @@ public LastProductAdapter(Context context,ArrayList<ProductsModel> productsModel
         holder.price.setText(TextViewUtil.getPriceToDisplay(model.getPrice(),1));
         holder.name.setText(model.getName());
         if(model.getDiscount() != 0){
-            holder.newPrice.setText(TextViewUtil.getDiscountToDisplay(model.getPrice(),model.getDiscount(),1));
+            holder.price.setText(TextViewUtil.getDiscountToDisplay(model.getPrice(),model.getDiscount(),1));
+            holder.newPrice.setText(TextViewUtil.getOldPrice(model.getPrice(),1));
         }else{
+            holder.price.setText(TextViewUtil.getPriceToDisplay(model.getPrice(),1));
             holder.newPrice.setVisibility(View.INVISIBLE);
         }
     }

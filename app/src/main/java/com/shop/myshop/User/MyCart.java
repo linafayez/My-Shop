@@ -65,12 +65,6 @@ static TextView total;
 
     public static class changed {
         static DecimalFormat df2 = new DecimalFormat("#.##");
-        public static void total(double t) {
-//            double price = Double.valueOf(total.getText().toString().split("JD")[0]);
-//           t= Double.parseDouble(df2.format(t));
-//            double s = price+ t;
-//            total.setText(df2.format(s) + "JD");
-        }
         public static void setTotal(ArrayList<ProductsModel> data){
             Double sum= 0.0;
             if (data != null) {
@@ -82,7 +76,7 @@ static TextView total;
                     }
                     int number = P.getItemNumberInCart();
                     sum += Double.parseDouble(df2.format(price*number));
-                   // sum += price*number;
+
                 }
             }
             total.setText(df2.format(sum)+"JD");
