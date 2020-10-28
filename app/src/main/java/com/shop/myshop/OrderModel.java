@@ -13,6 +13,7 @@ public class OrderModel {
     private String note;
     private String state;
     private Timestamp time;
+    private String OrderId;
     public OrderModel(){}
 
     public OrderModel( double latitude, double longitude, ArrayList<ProductsModel> productsModels, String total, String UserId, String note) {
@@ -87,5 +88,13 @@ public class OrderModel {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public String getOrderId() {
+        return OrderId;
+    }
+
+    public void setOrderId(String orderId) {
+        OrderId = orderId;
     }
 }

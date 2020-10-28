@@ -33,7 +33,7 @@ import com.shop.myshop.util.TextViewUtil;
 import java.util.ArrayList;
 
 public class OrderUser extends Fragment {
-RecyclerView order;
+    RecyclerView order;
     FirebaseFirestore db;
     FirestoreRecyclerAdapter adapter;
     ArrayList<OrderModel> orderModels;

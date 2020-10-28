@@ -49,13 +49,13 @@ public class TextViewUtil {
           return sum;
     }
     public static Spanned ItemsName(ArrayList<ProductsModel> data){
-        Spanned spanned =Html.fromHtml("<ul>");
-
+      String text ="<ul>";
         for(int i=0;i < data.size();i++) {
-            spanned = Html.fromHtml(spanned.toString()+"<li>" + data.get(i).getName() + "</li>");
+            text +="<li>"+data.get(i).getName()+ "</li>";
         }
+        text+="</ul>";
 
-        return spanned;
+        return Html.fromHtml(text);
 
     }
 

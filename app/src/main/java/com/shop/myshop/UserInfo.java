@@ -5,12 +5,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.io.Serializable;
 
 public class UserInfo implements Serializable {
-    private FirebaseFirestore firestore ;
     private String Name;
     private String Id;
     private String Type ;
     private String gender;
+    private String image;
     private int age;
+    private String Address;
     private boolean isAdmin;
     private String email;
     private String phone;
@@ -92,5 +93,21 @@ public class UserInfo implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getAddress() {
+        return Address;
+    }
+
+    public void setAddress(String address) {
+        Address = address;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
