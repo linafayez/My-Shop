@@ -95,14 +95,16 @@ ImageView adsImage, edit, ok;
     }
 
     public void image(){
+
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 100);
             return;
         }
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.putExtra(EXTRA_ALLOW_MULTIPLE, false);
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false);
         intent.setType("image/*");
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
+
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

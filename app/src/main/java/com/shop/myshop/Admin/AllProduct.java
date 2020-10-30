@@ -167,7 +167,9 @@ public class AllProduct extends Fragment {
         if ( type.equals("editProduct") ) {
             goToAddProduct(product);
         }else if(type.equals("Ads")){
-            displayAlert(product);
+
+           Navigation.findNavController(getView()).navigate(AllProductDirections.actionAllProductToAds(product));
+          //  displayAlert(product);
         }else if(type.equals("view")){
             //          Navigation.findNavController(getView()).navigate(AllProductDirections.actionAllProductToProductView2(product));
         }else if(type.equals("deals")){
@@ -185,7 +187,7 @@ public class AllProduct extends Fragment {
                 .setMessage("Do you wont add ads for this product?")
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-               Navigation.findNavController(getView()).navigate(AllProductDirections.actionAllProductToAds(product));
+              Navigation.findNavController(getView()).navigate(AllProductDirections.actionAllProductToAds(product));
                     }
                 }).setNegativeButton("cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {

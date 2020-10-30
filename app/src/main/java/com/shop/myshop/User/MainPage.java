@@ -28,6 +28,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
+import com.littlemango.stacklayoutmanager.StackLayoutManager;
 import com.shop.myshop.AdsModel;
 import com.shop.myshop.ProductsModel;
 import com.shop.myshop.R;
@@ -95,7 +96,7 @@ ArrayList<AdsModel> adsList;
                            adsList.add(document.toObject(AdsModel.class));
                        }
                   adapter = new AdsAdapter(adsList, getContext());
-                       RecyclerView.LayoutManager manager =new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false);
+                       StackLayoutManager manager = new StackLayoutManager();
                        ads.setLayoutManager(manager);
                        ads.setHasFixedSize(false);
                        ads.setAdapter(adapter);

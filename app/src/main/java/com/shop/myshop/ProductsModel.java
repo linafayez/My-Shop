@@ -18,7 +18,7 @@ public class ProductsModel implements Serializable {
     private ArrayList<String> thumbnailPic;
     private ArrayList<String> pic;
     private String category_id;
-    private Timestamp time;
+    private transient Timestamp time;
     private boolean haveAds;
     private int discount;
 
