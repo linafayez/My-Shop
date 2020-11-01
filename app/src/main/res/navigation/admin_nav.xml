@@ -135,5 +135,9 @@
         android:id="@+id/orderView"
         android:name="com.shop.myshop.Admin.OrderView"
         android:label="fragment_order_view"
-        tools:layout="@layout/fragment_order_view" />
+        tools:layout="@layout/fragment_order_view" >
+        <argument
+            android:name="order"
+            app:argType="com.shop.myshop.OrderModel" />
+    </fragment>
 </navigation>

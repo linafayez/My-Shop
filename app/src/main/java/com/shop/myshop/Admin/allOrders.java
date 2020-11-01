@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -89,7 +90,7 @@ public class allOrders extends Fragment {
         super.onStop();
         adapter.stopListening();
     }
-    static class OrderHolder extends RecyclerView.ViewHolder{
+    class OrderHolder extends RecyclerView.ViewHolder{
         TextView Date, Items , total,time, orderId,UserId , OrderState;
    //  StepsView process;
         public OrderHolder(@NonNull View itemView) {
@@ -105,6 +106,14 @@ public class allOrders extends Fragment {
             Date = itemView.findViewById(R.id.date);
             Items = itemView.findViewById(R.id.productList);
             total = itemView.findViewById(R.id.total);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    Navigation.findNavController(itemView.getRootView()).navigate(R.id.action_allOrders_to_orderView);
+                   Navigation.findNavController(getView()).navigate(allOrdersDirections.actionAllOrdersToOrderView(options.getSnapshots().get(getAdapterPosition())));
+                }
+            });
+
 
         }
     }

@@ -2,9 +2,10 @@ package com.shop.myshop;
 
 import com.google.firebase.Timestamp;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class OrderModel {
+public class OrderModel implements Serializable {
     private double latitude ;
     private double longitude ;
     private ArrayList<ProductsModel> productsModels;
