@@ -52,7 +52,7 @@ public class OrderView extends Fragment{
     TextView OrderId, user;
     OrderModel orderModel;
     ItemsAdapter adapter;
-    TextView total , total2;
+    TextView total , total2, phone, address;
 UserInfo User;
     public OrderView() {
         // Required empty public constructor
@@ -68,14 +68,17 @@ UserInfo User;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        orderModel = OrderViewArgs.fromBundle(getArguments()).getOrder();
         OrderId = view.findViewById(R.id.id);
         items = view.findViewById(R.id.orderItems);
         user = view.findViewById(R.id.User);
+        address = view.findViewById(R.id.address);
         total = view.findViewById(R.id.total);
         total2= view.findViewById(R.id.sum);
-        orderModel = OrderViewArgs.fromBundle(getArguments()).getOrder();
         data = orderModel.getProductsModels();
+        address.setText(TextViewUtil.getCompleteAddressString(orderModel.getLatitude(), orderModel.getLongitude(),getContext()));
         total.setText(orderModel.getTotal());
+        phone = view.findViewById(R.id.phone);
         total2.setText(TextViewUtil.setSubTotal(data)+3+"JD");
         OrderId.setText(orderModel.getOrderId());
         FirebaseFirestore.getInstance().collection("User").document( orderModel.getUserId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -83,6 +86,8 @@ UserInfo User;
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 User = documentSnapshot.toObject(UserInfo.class);
                 user.setText("User Name:" +User.getName());
+                phone.setText("User Phone Number:"+User.getPhone());
+
             }
         });
 

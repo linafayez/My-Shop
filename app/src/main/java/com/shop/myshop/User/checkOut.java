@@ -3,6 +3,7 @@ package com.shop.myshop.User;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -122,7 +123,7 @@ public class checkOut extends Fragment {
                 date = new Date();
                 Timestamp timestamp = new Timestamp(date);
                 if (longitude != 0.0 && latitude != 0.0) {
-                    orderModel = new OrderModel(longitude, longitude, data, tickerView.getText(), FirebaseAuth.getInstance().getCurrentUser().getUid(), note.getText().toString());
+                    orderModel = new OrderModel(latitude, longitude, data, tickerView.getText(), FirebaseAuth.getInstance().getCurrentUser().getUid(), note.getText().toString());
                     orderModel.setTime(timestamp);
                     orderModel.setState("Confirmed");
                     UploadOrder(orderModel);
@@ -220,7 +221,7 @@ public class checkOut extends Fragment {
                     latitude = extras.getDouble("Latitude");
                     longitude = extras.getDouble("Longitude");
                     address.setVisibility(View.VISIBLE);
-                    address.setText(getCompleteAddressString(latitude, longitude));
+                    address.setText(TextViewUtil.getCompleteAddressString(latitude, longitude,getContext()));
 
                 }
             }
@@ -230,28 +231,6 @@ public class checkOut extends Fragment {
         }
     }//onActivityResult
 
-    private String getCompleteAddressString(double LATITUDE, double LONGITUDE) {
-        String strAdd = "";
-        Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
-        try {
-            List<Address> addresses = geocoder.getFromLocation(LATITUDE, LONGITUDE, 1);
-            if (addresses != null) {
-                Address returnedAddress = addresses.get(0);
-                StringBuilder strReturnedAddress = new StringBuilder("");
-
-                for (int i = 0; i <= returnedAddress.getMaxAddressLineIndex(); i++) {
-                    strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
-                }
-                strAdd = strReturnedAddress.toString();
-
-            } else {
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return strAdd;
-    }
 
     public void getPromoCode() {
         FirebaseFirestore.getInstance().collection("PromoCode").whereEqualTo("code", voucher.getText().toString()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {

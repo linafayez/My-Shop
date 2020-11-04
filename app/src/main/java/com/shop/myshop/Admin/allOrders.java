@@ -47,7 +47,7 @@ public class allOrders extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         order = view.findViewById(R.id.Orders);
         db = FirebaseFirestore.getInstance();
-        Query query = db.collection("Orders").orderBy("time");
+        Query query = db.collection("Orders").orderBy("time", Query.Direction.DESCENDING);
 
         options = new FirestoreRecyclerOptions.Builder<OrderModel>()
                 .setQuery(query,OrderModel.class)
