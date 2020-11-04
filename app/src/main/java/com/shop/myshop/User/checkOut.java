@@ -65,7 +65,9 @@ public class checkOut extends Fragment {
     Button addAdders, Order, ApplyVoucher;
     Date date;
     double latitude;
+    String  uniqueID;
     double longitude;
+    FirebaseFirestore db ;
     static TextView total, subTotal, shipping, address;
 
     public checkOut() {
@@ -85,6 +87,8 @@ public class checkOut extends Fragment {
         Order = view.findViewById(R.id.Order);
           tickerView = view.findViewById(R.id.tickerView);
         note = view.findViewById(R.id.note);
+        db = FirebaseFirestore.getInstance();
+        uniqueID = db.collection("Orders").document().getId();
         tickerView.setCharacterLists(TickerUtils.provideNumberList());
         ApplyVoucher = view.findViewById(R.id.button5);
         voucher = view.findViewById(R.id.voucher);
@@ -180,14 +184,30 @@ public class checkOut extends Fragment {
     }
 
     private void UploadOrder(OrderModel orderModel) {
-        FirebaseFirestore.getInstance().collection("Orders")
-                .add(orderModel).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        orderModel.setId(uniqueID);
+        db.collection("Orders").document(uniqueID).set(orderModel).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
-            public void onSuccess(DocumentReference documentReference) {
+            public void onSuccess(Void aVoid) {
+                updateProducts(orderModel.getProductsModels());
                 Navigation.findNavController(getView()).navigate(R.id.action_checkOut_to_orderUser);
                 sharedPreference.SaveCart(new ArrayList<ProductsModel>());
             }
         });
+    }
+
+    private void updateProducts(ArrayList<ProductsModel> products) {
+        for(int i=0;i<products.size();i++){
+            ProductsModel pro = products.get(i);
+            pro.setItemNumber( pro.getItemNumber()-pro.getItemNumberInCart());
+            pro.setItemNumberInCart(0);
+            db.collection("Products").document(pro.getID()).set(pro).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+
+                }
+            });
+        }
+
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

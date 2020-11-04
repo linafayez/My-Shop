@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class OrderModel implements Serializable {
     private double latitude ;
     private double longitude ;
+    private String id;
     private ArrayList<ProductsModel> productsModels;
     private String total;
     private String UserId;
@@ -97,5 +98,13 @@ public class OrderModel implements Serializable {
 
     public void setOrderId(String orderId) {
         OrderId = orderId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -28,9 +29,15 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.shop.myshop.OrderModel;
 import com.shop.myshop.ProductsModel;
 import com.shop.myshop.R;
+import com.shop.myshop.User.ItemsAdapter;
+import com.shop.myshop.UserInfo;
+import com.shop.myshop.util.TextViewUtil;
 import com.shuhart.stepview.StepView;
 
 import java.util.ArrayList;
@@ -42,9 +49,11 @@ public class OrderView extends Fragment{
     ArrayList<ProductsModel> data;
     MapView mapView;
     GoogleMap googleMap;
-    TextView OrderId, userId;
+    TextView OrderId, user;
     OrderModel orderModel;
-
+    ItemsAdapter adapter;
+    TextView total , total2;
+UserInfo User;
     public OrderView() {
         // Required empty public constructor
     }
@@ -61,16 +70,29 @@ public class OrderView extends Fragment{
         super.onViewCreated(view, savedInstanceState);
         OrderId = view.findViewById(R.id.id);
         items = view.findViewById(R.id.orderItems);
-        userId = view.findViewById(R.id.UserId);
+        user = view.findViewById(R.id.User);
+        total = view.findViewById(R.id.total);
+        total2= view.findViewById(R.id.sum);
         orderModel = OrderViewArgs.fromBundle(getArguments()).getOrder();
-        OrderId.setText(orderModel.getOrderId());
-        userId.setText("UserId:" + orderModel.getUserId().substring(0, 10));
-        stepView = view.findViewById(R.id.step_view);
         data = orderModel.getProductsModels();
+        total.setText(orderModel.getTotal());
+        total2.setText(TextViewUtil.setSubTotal(data)+3+"JD");
+        OrderId.setText(orderModel.getOrderId());
+        FirebaseFirestore.getInstance().collection("User").document( orderModel.getUserId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                User = documentSnapshot.toObject(UserInfo.class);
+                user.setText("User Name:" +User.getName());
+            }
+        });
+
+        stepView = view.findViewById(R.id.step_view);
+
+        adapter = new ItemsAdapter(getContext(), data);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
         items.setLayoutManager(manager);
         items.setHasFixedSize(false);
-   //     items.setAdapter(adapter);
+       items.setAdapter(adapter);
         List<String> step = new ArrayList<>();
         step.add("Step 1");
         step.add("step 2");
@@ -96,6 +118,7 @@ public class OrderView extends Fragment{
                 // other state methods are equal to the corresponding xml attributes
                 .commit();
         stepView.go(1, true);
+
 
 
     }

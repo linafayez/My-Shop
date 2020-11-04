@@ -33,33 +33,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+
+
             <TextView
-                android:id="@+id/UserId"
+                android:id="@+id/text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
-                android:layout_marginStart="4dp"
                 android:padding="7dp"
-                android:text="User ID"
-                android:textColor="@color/colorPrimary"
-                android:textSize="20dp"
+                android:text="Order items"
+                android:textSize="25dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/step_view" />
-
-
-            <TextView
-        android:id="@+id/text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="7dp"
-        android:layout_marginTop="15dp"
-        android:padding="7dp"
-        android:text="Order items"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/UserId" />
 
             <com.shuhart.stepview.StepView
                 android:id="@+id/step_view"
@@ -101,7 +87,8 @@
                 android:id="@+id/orderItems"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-             android:layout_margin="15dp"
+                android:layout_margin="15dp"
+                android:layout_marginTop="56dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -164,10 +151,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="User location"
+                android:text="About User"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
 
+            <TextView
+                android:id="@+id/User"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="7dp"
+                android:padding="7dp"
+                android:text="User name"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView18" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
