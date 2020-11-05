@@ -14,8 +14,7 @@ public class OrderModel implements Serializable {
     private String UserId;
     private String note;
     private String state;
-    private Timestamp time;
-    private String OrderId;
+    private transient Timestamp time;
     public OrderModel(){}
 
     public OrderModel( double latitude, double longitude, ArrayList<ProductsModel> productsModels, String total, String UserId, String note) {
@@ -90,14 +89,6 @@ public class OrderModel implements Serializable {
 
     public void setState(String state) {
         this.state = state;
-    }
-
-    public String getOrderId() {
-        return OrderId;
-    }
-
-    public void setOrderId(String orderId) {
-        OrderId = orderId;
     }
 
     public String getId() {

@@ -2,8 +2,10 @@ package com.shop.myshop.Admin;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,12 +14,14 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -30,6 +34,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.shop.myshop.OrderModel;
@@ -40,8 +45,11 @@ import com.shop.myshop.UserInfo;
 import com.shop.myshop.util.TextViewUtil;
 import com.shuhart.stepview.StepView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class OrderView extends Fragment{
     StepView stepView;
@@ -52,8 +60,11 @@ public class OrderView extends Fragment{
     TextView OrderId, user;
     OrderModel orderModel;
     ItemsAdapter adapter;
-    TextView total , total2, phone, address;
+    FloatingActionButton finish;
+    TextView total , total2, phone, address , date;
 UserInfo User;
+Button showInMap;
+
     public OrderView() {
         // Required empty public constructor
     }
@@ -70,6 +81,9 @@ UserInfo User;
         super.onViewCreated(view, savedInstanceState);
         orderModel = OrderViewArgs.fromBundle(getArguments()).getOrder();
         OrderId = view.findViewById(R.id.id);
+        date = view.findViewById(R.id.date);
+        finish = view.findViewById(R.id.finish);
+        showInMap = view.findViewById(R.id.button7);
         items = view.findViewById(R.id.orderItems);
         user = view.findViewById(R.id.User);
         address = view.findViewById(R.id.address);
@@ -80,7 +94,21 @@ UserInfo User;
         total.setText(orderModel.getTotal());
         phone = view.findViewById(R.id.phone);
         total2.setText(TextViewUtil.setSubTotal(data)+3+"JD");
-        OrderId.setText(orderModel.getOrderId());
+
+        OrderId.setText(orderModel.getId());
+        SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        Date javaDate = orderModel.getTime().toDate();
+        showInMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse("geo:%f,%f"+orderModel.getLatitude()+orderModel.getLongitude());
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:<" + orderModel.getLatitude()  + ">,<" + orderModel.getLongitude() + ">?q=<" + orderModel.getLatitude()  + ">,<" + orderModel.getLongitude() + ">(" + "user location" + ")"));
+                if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                    startActivity(intent);
+                }
+            }
+        });
+        date.setText(javaDate+"");
         FirebaseFirestore.getInstance().collection("User").document( orderModel.getUserId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -99,9 +127,9 @@ UserInfo User;
         items.setHasFixedSize(false);
        items.setAdapter(adapter);
         List<String> step = new ArrayList<>();
-        step.add("Step 1");
-        step.add("step 2");
-        step.add("step 3");
+        step.add("Confirmed");
+        step.add("Processing");
+        step.add("Completed");
         stepView.getState()
                 .selectedTextColor(ContextCompat.getColor(getContext(), R.color.colorAccent))
                 .animationType(StepView.ANIMATION_CIRCLE)
@@ -122,9 +150,35 @@ UserInfo User;
                 .typeface(ResourcesCompat.getFont(getContext(), R.font.roboto_light))
                 // other state methods are equal to the corresponding xml attributes
                 .commit();
-        stepView.go(1, true);
-
-
+        for (int i=1;i<step.size();i++){
+            if(orderModel.getState().equals(step.get(i))){
+                stepView.go(i, true);
+                break;
+            }
+        }
+        if(orderModel.getState().equals(step.get(0))) {
+           orderModel.setState(step.get(1));
+        FirebaseFirestore.getInstance().collection("Orders").document(orderModel.getId()).set(orderModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                stepView.go(1, true);
+            }
+        });
+        }
+        finish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                orderModel.setState(step.get(2));
+                FirebaseFirestore.getInstance().collection("Orders").document(orderModel.getId()).set(orderModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        stepView.go(2, true);
+                        Navigation.findNavController(getView()).navigateUp();
+                        //send notification to this user
+                    }
+                });
+            }
+        });
 
     }
 

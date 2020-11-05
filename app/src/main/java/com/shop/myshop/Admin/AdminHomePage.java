@@ -74,7 +74,7 @@ public class AdminHomePage extends Fragment {
                 holder.total.setText(model.getTotal());
                 holder.Date.setText(model.getTime().toDate().getDay()+"/"+model.getTime().toDate().getMonth()+"/"+model.getTime().toDate().getYear());
                 holder.Items.setText(TextViewUtil.ItemsName(model.getProductsModels()));
-                holder.orderId.setText(model.getOrderId());
+                holder.orderId.setText(model.getId());
                 holder.UserId.setText(model.getUserId().substring(0,10));
            }
         };

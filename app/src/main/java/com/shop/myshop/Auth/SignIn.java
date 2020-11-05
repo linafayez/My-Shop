@@ -115,8 +115,11 @@ public class SignIn extends Fragment  {
                         if ("User".equals(userInfo.getType())) {
                             Intent done = new Intent(getContext(), MainActivity.class);
                             startActivity(done);
+
                             //finish();
                         }
+                        email.setText("");
+                        password.setText("");
                     }
 
                 }
