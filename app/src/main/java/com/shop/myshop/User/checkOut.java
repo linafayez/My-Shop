@@ -238,13 +238,13 @@ public class checkOut extends Fragment {
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
                 if(queryDocumentSnapshots.size()!=0){
-                    Double p =TextViewUtil.setSubTotal(data);
+                   // Double p =TextViewUtil.setSubTotal(data);
                    int disc = Integer.parseInt(queryDocumentSnapshots.getDocuments().get(0).get("discount").toString());
-                    p-=p*(disc/100.0);
-                    tickerView.setAnimationDuration(700);
-                    tickerView.setAnimationInterpolator(new OvershootInterpolator());
-                    tickerView.setText(p+"JD");
+                    //p-=p*(disc/100.0);
 
+                    tickerView.setAnimationDuration(900);
+                    tickerView.setAnimationInterpolator(new OvershootInterpolator());
+                    tickerView.setText(TextViewUtil.totalWithDis(data,disc));
                 }
            //     Toast.makeText(getContext(),queryDocumentSnapshots.getDocuments().get(0).get("discount").toString(),Toast.LENGTH_LONG).show();
 

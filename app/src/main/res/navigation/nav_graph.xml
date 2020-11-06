@@ -92,7 +92,11 @@
         android:id="@+id/orderUser"
         android:name="com.shop.myshop.User.OrderUser"
         android:label="fragment_order_user"
-        tools:layout="@layout/fragment_order_user" />
+        tools:layout="@layout/fragment_order_user" >
+        <action
+            android:id="@+id/action_orderUser_to_feedback"
+            app:destination="@id/feedback" />
+    </fragment>
     <fragment
         android:id="@+id/userProfile"
         android:name="com.shop.myshop.User.UserProfile"
@@ -119,4 +123,9 @@
         android:name="com.shop.myshop.User.ChangePassword"
         android:label="fragment_change_password"
         tools:layout="@layout/fragment_change_password" />
+    <fragment
+        android:id="@+id/feedback"
+        android:name="com.shop.myshop.feedback"
+        android:label="fragment_feedback"
+        tools:layout="@layout/fragment_feedback" />
 </navigation>

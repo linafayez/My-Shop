@@ -53,6 +53,11 @@ public class TextViewUtil {
         }
           return sum;
     }
+    public static String totalWithDis(ArrayList<ProductsModel> data,int dis){
+        Double p =setSubTotal(data);
+        p-=p*(dis/100.0);
+        return df2.format(p)+"JD";
+    }
     public static Spanned ItemsName(ArrayList<ProductsModel> data){
       String text ="<ul>";
         for(int i=0;i < data.size();i++) {

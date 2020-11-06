@@ -1,5 +1,6 @@
 package com.shop.myshop.User;
 
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -29,6 +31,7 @@ import com.shop.myshop.OrderModel;
 import com.shop.myshop.ProductsModel;
 import com.shop.myshop.R;
 import com.shop.myshop.util.TextViewUtil;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -63,15 +66,17 @@ public class OrderUser extends Fragment {
             @NonNull
             @Override
             public OrderViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_order_card, parent, false);
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_orders_cart, parent, false);
                 return new OrderViewHolder(view);
             }
 
             @Override
             protected void onBindViewHolder(@NonNull OrderViewHolder holder, int position, @NonNull OrderModel model) {
-             holder.total.setText("Total ="+model.getTotal());
-             holder.Date.setText(model.getTime().toDate().getDay()+"/"+model.getTime().toDate().getMonth()+"/"+model.getTime().toDate().getYear());
-             holder.Items.setText(TextViewUtil.ItemsName(model.getProductsModels()));
+             holder.total.setText(model.getTotal());
+             holder.state.setText(model.getState());
+                Picasso.get().load(Uri.parse(model.getProductsModels().get(0).getPic().get(0))).into(holder.image);
+             holder.Date.setText(model.getTime().toDate()+"");
+          //   holder.Items.setText(TextViewUtil.ItemsName(model.getProductsModels()));
             }
         };
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
@@ -94,12 +99,15 @@ public class OrderUser extends Fragment {
         adapter.stopListening();
     }
     class OrderViewHolder extends RecyclerView.ViewHolder{
-        TextView Date, Items , total;
+        TextView Date, Items , total , state;
+        ImageView image;
         public OrderViewHolder(@NonNull View itemView) {
             super(itemView);
-            Date = itemView.findViewById(R.id.Date);
-            Items = itemView.findViewById(R.id.items);
+            Date = itemView.findViewById(R.id.time);
+        //    Items = itemView.findViewById(R.id.items);
             total = itemView.findViewById(R.id.total);
+            state= itemView.findViewById(R.id.OrderState);
+            image= itemView.findViewById(R.id.imageView5);
 
         }
     }
