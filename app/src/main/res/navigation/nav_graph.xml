@@ -125,7 +125,11 @@
         tools:layout="@layout/fragment_change_password" />
     <fragment
         android:id="@+id/feedback"
-        android:name="com.shop.myshop.feedback"
+        android:name="com.shop.myshop.User.feedback"
         android:label="fragment_feedback"
-        tools:layout="@layout/fragment_feedback" />
+        tools:layout="@layout/fragment_feedback" >
+        <argument
+            android:name="order"
+            app:argType="com.shop.myshop.OrderModel" />
+    </fragment>
 </navigation>

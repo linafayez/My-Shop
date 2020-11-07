@@ -21,6 +21,8 @@ public class ProductsModel implements Serializable {
     private transient Timestamp time;
     private boolean haveAds;
     private int discount;
+    private float rating;
+    private String note;
 
 
     public ProductsModel() {
@@ -169,4 +171,19 @@ public class ProductsModel implements Serializable {
         this.discount = discount;
     }
 
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
 }

@@ -14,6 +14,7 @@ public class OrderModel implements Serializable {
     private String UserId;
     private String note;
     private String state;
+    private String feedbackId;
     private transient Timestamp time;
     public OrderModel(){}
 
@@ -97,5 +98,13 @@ public class OrderModel implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getFeedbackId() {
+        return feedbackId;
+    }
+
+    public void setFeedbackId(String feedbackId) {
+        this.feedbackId = feedbackId;
     }
 }

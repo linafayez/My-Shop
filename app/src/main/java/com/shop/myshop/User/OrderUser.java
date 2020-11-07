@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,12 +20,15 @@ import android.widget.TextView;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.Gson;
 import com.shop.myshop.Admin.AllProduct;
 import com.shop.myshop.CategoryModel;
 import com.shop.myshop.OrderModel;
@@ -101,6 +105,7 @@ public class OrderUser extends Fragment {
     class OrderViewHolder extends RecyclerView.ViewHolder{
         TextView Date, Items , total , state;
         ImageView image;
+        ArrayList products;
         public OrderViewHolder(@NonNull View itemView) {
             super(itemView);
             Date = itemView.findViewById(R.id.time);
@@ -108,7 +113,15 @@ public class OrderUser extends Fragment {
             total = itemView.findViewById(R.id.total);
             state= itemView.findViewById(R.id.OrderState);
             image= itemView.findViewById(R.id.imageView5);
-
+            itemView.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        Navigation.findNavController(getView()).navigate(OrderUserDirections.actionOrderUserToFeedback(options.getSnapshots().get(getAdapterPosition())));
+       // Navigation.findNavController(getView()).navigate(R.id.action_orderUser_to_feedback);
+    }
+});
         }
     }
+
+
 }
