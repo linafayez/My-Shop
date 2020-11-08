@@ -2,6 +2,9 @@ package com.shop.myshop.User;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.CountDownTimer;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +36,8 @@ public class FeedBackAdapter extends RecyclerView.Adapter<FeedBackAdapter.feedBa
     static FeedbackModel feedbackModel;
     static ArrayList<ProductsModel> models;
     static OrderModel OrderModel;
-    ArrayList<ProductsModel> productsModels, pro;
+    static ArrayList<ProductsModel> productsModels;
+    static ArrayList<ProductsModel> pro;
     Context context;
 static String UID;
 
@@ -42,7 +46,7 @@ static String UID;
         this.context = context;
         models = new ArrayList<>();
         productsModels = orderModel.getProductsModels();
-       pro = feedBackViewHolder.Change.getProducts(productsModels);
+       pro = feedback.Change.getProducts(productsModels);
     }
 
     @NonNull
@@ -73,63 +77,82 @@ static String UID;
         RatingBar rating;
         ImageView image;
         TextInputLayout note;
-        FloatingActionButton done;
 
         public feedBackViewHolder(@NonNull View itemView) {
             super(itemView);
-            feedbackModel = new FeedbackModel();
-            if(OrderModel.getFeedbackId() == null) {
-                UID = FirebaseFirestore.getInstance().collection("Feedback").document().getId();
-            }else {
-                UID = OrderModel.getFeedbackId();
-            }
             name = itemView.findViewById(R.id.textView20);
             rating = itemView.findViewById(R.id.ratingBar);
             image = itemView.findViewById(R.id.state);
             note = itemView.findViewById(R.id.note);
-            done = itemView.findViewById(R.id.done);
-            done.setOnClickListener(new View.OnClickListener() {
+
+       //     feedbackModel.setUserId(FirebaseAuth.getInstance().getCurrentUser().getUid());
+            rating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
                 @Override
-                public void onClick(View v) {
-                 // updateProducts(pro.get(getAdapterPosition()),rating.getRating(),note.getEditText().getText().toString());
-                 //   Toast.makeText(itemView.getContext(), rating.getRating() + "", Toast.LENGTH_LONG).show();
+                public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+
                 }
             });
-       //     feedbackModel.setUserId(FirebaseAuth.getInstance().getCurrentUser().getUid());
-
-
-        }
-        public static class Change{
-            public static void updateProducts( ProductsModel pro , Float rating , String note) {
-                Date date = new Date();
-                Timestamp timestamp = new Timestamp(date);
-                pro.setRating(rating);
-                pro.setNote(note);
-                FirebaseFirestore.getInstance().collection("Products").document(pro.getID()).set(pro).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        models.add(pro);
-                        feedbackModel.setProductsModels(models);
-                        feedbackModel.setTimestamp(timestamp);
-                        feedbackModel.setOrderId(pro.getID());
+            note.getEditText().addTextChangedListener(new TextWatcher() {
+                CountDownTimer timer = null;
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    if (timer != null) {
+                        timer.cancel();
                     }
-                });
-            }
-            private static ArrayList<ProductsModel> getProducts(ArrayList<ProductsModel> products) {
-                ArrayList<ProductsModel> models= new ArrayList<>();
-                for(int i= 0 ;i<products.size();i++){
-                    FirebaseFirestore.getInstance().collection("Products").document(products.get(i).getID()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            models.add(documentSnapshot.toObject(ProductsModel.class));
+
+                    timer = new CountDownTimer(1500, 10000) {
+
+                        public void onTick(long millisUntilFinished) {
                         }
-                    });
+
+                        public void onFinish() {
+
+                            //do what you wish
+                            if(rating.getNumStars()!=0){
+                                //productsModels
+                                feedback.Change.updateProducts(pro.get(getAdapterPosition()),rating.getRating(),note.getEditText().getText().toString(), getAdapterPosition());
+                            }
+
+                        }
+
+                    }.start();
                 }
 
-                return models;
-            }
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (timer != null) {
+                        timer.cancel();
+                    }
+
+                    timer = new CountDownTimer(1500, 1000) {
+
+                        public void onTick(long millisUntilFinished) {
+                        }
+
+                        public void onFinish() {
+
+                            //do what you wish
+                            if(rating.getNumStars()!=0&& !note.getEditText().getText().equals(null)){
+                                //productsModels
+                                feedback.Change.updateProducts(pro.get(getAdapterPosition()),rating.getRating(),note.getEditText().getText().toString(), getAdapterPosition());
+                            }
+
+                        }
+
+                    }.start();
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+
+
+                }
+            });
+
 
         }
+
     }
 
 

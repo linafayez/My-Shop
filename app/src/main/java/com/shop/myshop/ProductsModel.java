@@ -22,7 +22,7 @@ public class ProductsModel implements Serializable {
     private boolean haveAds;
     private int discount;
     private float rating;
-    private String note;
+    private ArrayList<String> note;
 
 
     public ProductsModel() {
@@ -179,11 +179,11 @@ public class ProductsModel implements Serializable {
         this.rating = rating;
     }
 
-    public String getNote() {
+    public ArrayList<String> getNote() {
         return note;
     }
 
-    public void setNote(String note) {
+    public void setNote(ArrayList<String> note) {
         this.note = note;
     }
 }
