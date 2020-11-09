@@ -27,8 +27,13 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity" >
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable"/> <!-- Your searchable file -->
+        </activity>
     </application>
 
 </manifest>

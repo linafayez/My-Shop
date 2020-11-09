@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".User.MainPage">
 
+
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -16,16 +18,17 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-           >
+            android:layout_height="wrap_content">
+
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/switchImage"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="275dp"
                 android:clipToPadding="true"
-                android:scrollbarSize="0dp"
                 android:orientation="vertical"
+                android:scrollbarSize="0dp"
                 android:scrollbarStyle="insideOverlay"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -41,6 +44,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
+            <SearchView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="15dp"
+                android:id="@+id/search"
+                android:background="@drawable/button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/textView8"
                 android:layout_width="wrap_content"
@@ -52,6 +65,8 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recyclerView2" />
+
+
 
             <Button
                 android:id="@+id/all"
@@ -97,8 +112,16 @@
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView9" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/searchResult"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
