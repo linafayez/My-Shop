@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_mainPage_to_products"
             app:destination="@id/products" />
+        <action
+            android:id="@+id/action_mainPage_to_searchPage"
+            app:destination="@id/searchPage" />
     </fragment>
     <fragment
         android:id="@+id/myCart"
@@ -131,5 +134,14 @@
         <argument
             android:name="order"
             app:argType="com.shop.myshop.OrderModel" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchPage"
+        android:name="com.shop.myshop.User.SearchPage"
+        android:label="fragment_search_page"
+        tools:layout="@layout/fragment_search_page" >
+        <action
+            android:id="@+id/action_searchPage_to_productView"
+            app:destination="@id/productView" />
     </fragment>
 </navigation>
