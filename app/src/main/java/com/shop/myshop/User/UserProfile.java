@@ -25,7 +25,7 @@ import com.shop.myshop.UserInfo;
 
 public class UserProfile extends Fragment {
     TextView name, phone;
-    LinearLayout userInfo , LogOut , changePassword;
+    LinearLayout userInfo , LogOut , changePassword, req;
     UserInfo user;
     public UserProfile() {
         // Required empty public constructor
@@ -40,43 +40,50 @@ public class UserProfile extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        userInfo = view.findViewById(R.id.userInfo);
-        LogOut = view.findViewById(R.id.LogOut);
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        FirebaseFirestore.getInstance().collection("User").document(currentUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                user = documentSnapshot.toObject(UserInfo.class);
-                name.setText(user.getName());
-                phone.setText(user.getPhone()+"");
-
-            }
-        });
-        userInfo.setOnClickListener(new View.OnClickListener() {
+        req = view.findViewById(R.id.req);
+//        userInfo = view.findViewById(R.id.userInfo);
+//        LogOut = view.findViewById(R.id.LogOut);
+//        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+//        FirebaseFirestore.getInstance().collection("User").document(currentUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+//            @Override
+//            public void onSuccess(DocumentSnapshot documentSnapshot) {
+//                user = documentSnapshot.toObject(UserInfo.class);
+//                name.setText(user.getName());
+//                phone.setText(user.getPhone()+"");
+//
+//            }
+//        });
+//        userInfo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Navigation.findNavController(getView()).navigate(UserProfileDirections.actionUserProfileToUserInfoPage(user));
+//            }
+//        });
+//
+//        name = view.findViewById(R.id.textView6);
+//        phone = view.findViewById(R.id.textView7);
+//
+//        LogOut.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                FirebaseAuth.getInstance().signOut();
+//                getActivity().finish();
+//                // Navigation.findNavController(getView()).navigateUp();
+////                Intent out = new Intent(getActivity(), StartPage.class);
+////                startActivity(out);
+//            }
+//        });
+//        changePassword = view.findViewById(R.id.ChangePassword);
+//        changePassword.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Navigation.findNavController(getView()).navigate(R.id.action_userProfile_to_changePassword);
+//            }
+//        });
+        req.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(getView()).navigate(UserProfileDirections.actionUserProfileToUserInfoPage(user));
-            }
-        });
-
-        name = view.findViewById(R.id.textView6);
-        phone = view.findViewById(R.id.textView7);
-
-        LogOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                getActivity().finish();
-                // Navigation.findNavController(getView()).navigateUp();
-//                Intent out = new Intent(getActivity(), StartPage.class);
-//                startActivity(out);
-            }
-        });
-        changePassword = view.findViewById(R.id.ChangePassword);
-        changePassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(getView()).navigate(R.id.action_userProfile_to_changePassword);
+                Navigation.findNavController(getView()).navigate(R.id.action_userProfile_to_requestPage);
             }
         });
     }

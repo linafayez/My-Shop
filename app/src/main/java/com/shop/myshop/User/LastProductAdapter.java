@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.shop.myshop.ProductsModel;
 import com.shop.myshop.R;
 import com.shop.myshop.SharedPreference;
@@ -62,16 +63,17 @@ public LastProductAdapter(Context context,ArrayList<ProductsModel> productsModel
         ImageView image;
         TextView name, price , newPrice;
         Button AddToCart;
+        FloatingActionButton add ;
         ProductsModel productsModel;
         public LastViewHolder(@NonNull final View itemView) {
             super(itemView);
-
+            add = itemView.findViewById(R.id.floatingActionButton);
             image = itemView.findViewById(R.id.imageView4);
             name = itemView.findViewById(R.id.name);
             price = itemView.findViewById(R.id.price);
             AddToCart = itemView.findViewById(R.id.add);
             newPrice = itemView.findViewById(R.id.newPrice);
-            AddToCart.setOnClickListener(new View.OnClickListener() {
+            add.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                      productsModel = productsModels.get(getAdapterPosition());

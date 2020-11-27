@@ -111,6 +111,9 @@
         <action
             android:id="@+id/action_userProfile_to_changePassword"
             app:destination="@id/changePassword" />
+        <action
+            android:id="@+id/action_userProfile_to_requestPage"
+            app:destination="@id/requestPage" />
     </fragment>
     <fragment
         android:id="@+id/userInfoPage"
@@ -144,4 +147,9 @@
             android:id="@+id/action_searchPage_to_productView"
             app:destination="@id/productView" />
     </fragment>
+    <fragment
+        android:id="@+id/requestPage"
+        android:name="com.shop.myshop.User.requestPage"
+        android:label="fragment_request_page"
+        tools:layout="@layout/fragment_request_page" />
 </navigation>
