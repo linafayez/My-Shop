@@ -54,7 +54,11 @@
         android:id="@+id/adminHomePage"
         android:name="com.shop.myshop.Admin.AdminHomePage"
         android:label="fragment_admin_home_page"
-        tools:layout="@layout/fragment_admin_home_page" />
+        tools:layout="@layout/fragment_admin_home_page" >
+        <action
+            android:id="@+id/action_adminHomePage_to_viewOrderOfShop"
+            app:destination="@id/viewOrderOfShop" />
+    </fragment>
     <fragment
         android:id="@+id/category"
         android:name="com.shop.myshop.Category"
@@ -139,5 +143,14 @@
         <argument
             android:name="order"
             app:argType="com.shop.myshop.OrderModel" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewOrderOfShop"
+        android:name="com.shop.myshop.Admin.ViewOrderOfShop"
+        android:label="fragment_view_order_of_shop"
+        tools:layout="@layout/fragment_view_order_of_shop" >
+        <argument
+            android:name="shop"
+            app:argType="com.shop.myshop.shopModel" />
     </fragment>
 </navigation>

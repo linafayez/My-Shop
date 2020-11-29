@@ -41,7 +41,8 @@ public class SignIn extends Fragment  {
     private FirebaseAuth mAuth;
     EditText email,password ;
     FirebaseFirestore db;
-   // SharedPreference sharedPreference;
+    SharedPreference sharedPreference;
+
     public SignIn() {
         // Required empty public constructor
     }
@@ -59,6 +60,7 @@ public class SignIn extends Fragment  {
         super.onViewCreated(view, savedInstanceState);
       //  final NavController navController = Navigation.findNavController(getActivity(), R.id.auth_nav);
         login = view.findViewById(R.id.button);
+         sharedPreference = new SharedPreference(getContext());
         db = FirebaseFirestore.getInstance();
         email = view.findViewById(R.id.email);
         password = view.findViewById(R.id.editTextTextPassword);
@@ -76,6 +78,7 @@ public class SignIn extends Fragment  {
         View.OnClickListener f =Navigation.createNavigateOnClickListener(R.id.action_signIn2_to_forgotPassword);
         restPass.setOnClickListener(f);
 
+
     }
     private void startSignIn(){
         String e = email.getText().toString();
@@ -88,6 +91,7 @@ public class SignIn extends Fragment  {
          mAuth.signInWithEmailAndPassword(e,p).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
              @Override
              public void onSuccess(AuthResult authResult) {
+
                  updateUI(mAuth.getCurrentUser());
              }
          }).addOnFailureListener(new OnFailureListener() {
@@ -108,6 +112,7 @@ public class SignIn extends Fragment  {
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     UserInfo userInfo = documentSnapshot.toObject(UserInfo.class);
                     if(userInfo != null) {
+                        sharedPreference.addUser(userInfo);
                         if (userInfo.getType().equals("Admin")) {
                             Intent done = new Intent(getContext(), AdminActivity.class);
                             startActivity(done);

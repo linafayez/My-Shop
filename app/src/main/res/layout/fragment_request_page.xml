@@ -13,7 +13,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">>
+        app:layout_constraintTop_toTopOf="parent">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
                         android:id="@+id/imageView6"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
-                        android:layout_marginTop="44dp"
+                        android:layout_marginTop="24dp"
 
                         android:src="@drawable/ic_baseline_add_a_photo_24"
                         app:civ_border_color="@color/base"
@@ -52,12 +52,13 @@
                         android:id="@+id/textView21"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="25dp"
                         android:text="Be one of our family"
+                        android:textSize="25dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+                        app:layout_constraintTop_toBottomOf="@+id/imageView6"
+                        app:layout_constraintVertical_bias="0.347" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -116,13 +117,48 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/done"
-                android:layout_width="wrap_content"
+                android:id="@+id/AddImage"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="done"
-                app:layout_constraintEnd_toEndOf="@+id/about"
-                app:layout_constraintStart_toStartOf="@+id/about"
+                android:layout_margin="7dp"
+                android:background="@drawable/button"
+                android:textColor="@color/white"
+                android:text="Add Image for your work"
+                android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="@+id/about" />
+
+
+            <HorizontalScrollView
+                android:id="@+id/switchImage"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_margin="7dp"
+                android:layout_weight="3"
+                android:clipToPadding="true"
+                android:scrollbarSize="0dp"
+                android:scrollbarStyle="insideOverlay"
+                app:layout_constraintEnd_toEndOf="@+id/AddImage"
+                app:layout_constraintStart_toStartOf="@+id/AddImage"
+                app:layout_constraintTop_toBottomOf="@+id/AddImage">
+
+                <LinearLayout
+                    android:id="@+id/imageGallery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal" />
+            </HorizontalScrollView>
+
+            <Button
+                android:id="@+id/done"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="7dp"
+                android:background="@drawable/button"
+                android:text="Done"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/switchImage"
+                app:layout_constraintStart_toStartOf="@+id/switchImage"
+                app:layout_constraintTop_toBottomOf="@+id/switchImage" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

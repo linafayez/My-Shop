@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +26,7 @@ import com.littlemango.stacklayoutmanager.StackLayoutManager;
 import com.shop.myshop.OrderModel;
 import com.shop.myshop.R;
 import com.shop.myshop.User.OrderUser;
+import com.shop.myshop.shopModel;
 import com.shop.myshop.util.TextViewUtil;
 
 import java.util.ArrayList;
@@ -34,7 +36,7 @@ public class AdminHomePage extends Fragment {
     RecyclerView order;
     FirebaseFirestore db;
     FirestoreRecyclerAdapter adapter;
-    FirestoreRecyclerOptions<OrderModel> options;
+    FirestoreRecyclerOptions<shopModel> options;
     public AdminHomePage() {
         // Required empty public constructor
     }
@@ -54,28 +56,29 @@ public class AdminHomePage extends Fragment {
         order = view.findViewById(R.id.orders);
         allOrders = view.findViewById(R.id.AllOrder);
         db = FirebaseFirestore.getInstance();
-        Query query = db.collection("Orders").orderBy("time");
+        Query query = db.collection("Shop").whereEqualTo("shopState","Request");
 
-        options = new FirestoreRecyclerOptions.Builder<OrderModel>()
-                .setQuery(query,OrderModel.class)
+        options = new FirestoreRecyclerOptions.Builder<shopModel>()
+                .setQuery(query,shopModel.class)
                 .build();
 
-        adapter = new FirestoreRecyclerAdapter<OrderModel, OrderHolder>(options){
+        adapter = new FirestoreRecyclerAdapter<shopModel, shopHolder>(options){
 
             @NonNull
             @Override
-            public OrderHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.admin_order, parent, false);
-                return new OrderHolder(view);
+            public shopHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.new_shop, parent, false);
+                return new shopHolder(view);
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull OrderHolder holder, int position, @NonNull OrderModel model) {
-                holder.total.setText(model.getTotal());
-                holder.Date.setText(model.getTime().toDate().getDay()+"/"+model.getTime().toDate().getMonth()+"/"+model.getTime().toDate().getYear());
-                holder.Items.setText(TextViewUtil.ItemsName(model.getProductsModels()));
-                holder.orderId.setText(model.getId());
-                holder.UserId.setText(model.getUserId().substring(0,10));
+            protected void onBindViewHolder(@NonNull shopHolder holder, int position, @NonNull shopModel model) {
+              holder.shopName.setText("Name : "+model.getName());
+//                holder.Date.setText(model.getTime().toDate().getDay()+"/"+model.getTime().toDate().getMonth()+"/"+model.getTime().toDate().getYear());
+//                holder.Items.setText(TextViewUtil.ItemsName(model.getProductsModels()));
+               holder.type.setText("Type of shop : "+model.getType());
+               if(model.getUser()!= null)
+                  holder.User.setText("User name : "+model.getUser().getName());
            }
         };
 
@@ -97,18 +100,23 @@ public class AdminHomePage extends Fragment {
         super.onStop();
         adapter.stopListening();
     }
-     class OrderHolder extends RecyclerView.ViewHolder{
-        TextView Date, Items , total,time, orderId,UserId , OrderState;
-        public OrderHolder(@NonNull View itemView) {
+     class shopHolder extends RecyclerView.ViewHolder{
+        TextView Date, User , total,time, type,UserId , shopName;
+        public shopHolder(@NonNull View itemView) {
             super(itemView);
-            OrderState = itemView.findViewById(R.id.OrderState);
-            orderId = itemView.findViewById(R.id.id);
-            UserId = itemView.findViewById(R.id.userId);
-            time = itemView.findViewById(R.id.time);
-            Date = itemView.findViewById(R.id.date);
-            Items = itemView.findViewById(R.id.productList);
-            total = itemView.findViewById(R.id.total);
-
+           shopName = itemView.findViewById(R.id.shopName);
+            type = itemView.findViewById(R.id.type);
+            User = itemView.findViewById(R.id.user);
+//            time = itemView.findViewById(R.id.time);
+//            Date = itemView.findViewById(R.id.date);
+//            Items = itemView.findViewById(R.id.productList);
+//            total = itemView.findViewById(R.id.total);
+itemView.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        Navigation.findNavController(getView()).navigate(AdminHomePageDirections.actionAdminHomePageToViewOrderOfShop(options.getSnapshots().get(getAdapterPosition())));
+    }
+});
         }
     }
 }

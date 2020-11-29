@@ -1,5 +1,7 @@
 package com.shop.myshop.Admin;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -23,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.shop.myshop.CategoryDirections;
 import com.shop.myshop.MainActivity;
 import com.shop.myshop.R;
+import com.shop.myshop.SharedPreference;
 import com.shop.myshop.StartPage;
 import com.shop.myshop.UserInfo;
 
@@ -30,6 +33,8 @@ public class AdminProfile extends Fragment {
     LinearLayout addPromoCode;
     Button AddCategory,AddProduct, editProduct,editCategory, logOut, Ads, deals;
     TextView name, phone;
+    SharedPreference sharedPreference;
+    UserInfo user;
     public AdminProfile() {
         // Required empty public constructor
     }
@@ -44,7 +49,8 @@ public class AdminProfile extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+       sharedPreference =new SharedPreference(getContext());
+       user = sharedPreference.getUser();
         addPromoCode = view.findViewById(R.id.addPromoCode);
         name = view.findViewById(R.id.textView6);
         phone = view.findViewById(R.id.textView7);
@@ -53,8 +59,26 @@ public class AdminProfile extends Fragment {
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                getActivity().finish();
+
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Log out")
+                        .setMessage("Are you sure to sign out?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                        sharedPreference.addUser(null);
+                                FirebaseAuth.getInstance().signOut();
+                                Intent i = new Intent(getActivity(),
+                                        StartPage.class);
+                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                                        Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(i);
+                            }
+                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
+                })
+                        .show();
             }
         });
         AddCategory = view.findViewById(R.id.newCategory);
@@ -101,15 +125,8 @@ public class AdminProfile extends Fragment {
              goToCategory("deals");
             }
         });
-        FirebaseFirestore.getInstance().collection("User").document(currentUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                UserInfo user = documentSnapshot.toObject(UserInfo.class);
-                name.setText(user.getName());
-                phone.setText(user.getPhone()+"");
-
-            }
-        });
+        name.setText(user.getName());
+        phone.setText(user.getPhone()+"");
                 //.whereEqualTo("type","Admin").
         addPromoCode.setOnClickListener(new View.OnClickListener() {
             @Override

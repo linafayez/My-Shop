@@ -10,39 +10,42 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SharedPreference {
-    Context context;
+    static Context context;
     public SharedPreference(Context context){
         this.context =context;
     }
-//    public void saveUser(UserInfo User) {
-//        SharedPreferences settings;
-//        SharedPreferences.Editor editor;
-//
-//        settings = context.getSharedPreferences("User",
-//                Context.MODE_PRIVATE);
-//        editor = settings.edit();
-//        Gson gson = new Gson();
-//        String user = gson.toJson(User);
-//        editor.putString("user", user);
-//
-//        editor.apply();
-//    }
-//    public UserInfo getUser(){
-//        SharedPreferences settings;
-//        UserInfo userModel;
-//        settings = context.getSharedPreferences("User",
-//                Context.MODE_PRIVATE);
-//        if (settings.contains("User")) {
-//            String u = settings.getString("user", null);
-//            Gson gson = new Gson();
-//             userModel = gson.fromJson(u, UserInfo.class);
-//        } else
-//            return null;
-//
-//        return userModel;
-//
-//    }
 
+    public static void addUser(UserInfo userObject){
+        SharedPreferences user;
+        SharedPreferences.Editor editorUser;
+        user = context.getSharedPreferences("User", Context.MODE_PRIVATE);
+        editorUser = user.edit();
+        Gson gson = new Gson();
+        String userString = gson.toJson(userObject);
+        editorUser.putString("user", userString);
+
+        editorUser.apply();
+    }
+
+    public UserInfo getUser(){
+        SharedPreferences settings;
+        UserInfo user;
+
+        settings = context.getSharedPreferences("User",
+                Context.MODE_PRIVATE);
+
+        if (settings.contains("user")) {
+            String u = settings.getString("user", null);
+            Gson gson = new Gson();
+            user = gson.fromJson(u,
+                    UserInfo.class);
+
+        }else {
+            user = null;
+        }
+
+        return user;
+    }
     public void SaveCart(List<ProductsModel> pro) {
         SharedPreferences settings;
         SharedPreferences.Editor editor;

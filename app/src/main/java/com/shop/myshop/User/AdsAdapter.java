@@ -23,7 +23,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class AdsAdapter extends RecyclerView.Adapter<AdsAdapter.AdsViewHolder> {
-    ArrayList<AdsModel> adsList;
+    static ArrayList<AdsModel> adsList;
     Context context;
     public AdsAdapter(ArrayList<AdsModel> adsList, Context context){
         this.adsList = adsList;
@@ -50,7 +50,7 @@ public class AdsAdapter extends RecyclerView.Adapter<AdsAdapter.AdsViewHolder> {
         return adsList.size();
     }
 
-    public class AdsViewHolder extends RecyclerView.ViewHolder {
+    public static class AdsViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
         Bundle bundle = new Bundle();
        // Gson gson = new Gson();

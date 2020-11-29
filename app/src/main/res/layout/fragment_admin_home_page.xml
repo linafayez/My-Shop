@@ -31,6 +31,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/t"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="7dp"
+        android:padding="7dp"
+        android:text="new shopes"
+        android:textColor="@color/colorPrimary"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="82dp"
@@ -141,7 +154,7 @@
         android:id="@+id/orders"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:layout_marginTop="25dp"
+        android:layout_margin="7dp"
         android:clipToPadding="true"
         android:orientation="vertical"
         android:scrollbarSize="0dp"
@@ -149,6 +162,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+        app:layout_constraintTop_toBottomOf="@+id/t" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
