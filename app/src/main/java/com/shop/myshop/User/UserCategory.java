@@ -19,9 +19,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.gson.Gson;
-import com.shop.myshop.Category;
-import com.shop.myshop.CategoryModel;
+import com.shop.myshop.Models.CategoryModel;
 import com.shop.myshop.R;
 import com.squareup.picasso.Picasso;
 

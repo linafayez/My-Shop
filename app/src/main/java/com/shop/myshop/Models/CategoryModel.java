@@ -1,9 +1,11 @@
-package com.shop.myshop;
+package com.shop.myshop.Models;
+
 
 import java.io.Serializable;
 
 public class CategoryModel implements Serializable {
     private String name,desc, image,id;
+    private String shopId;
 
 
     public CategoryModel(){
@@ -46,5 +48,13 @@ public class CategoryModel implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(String shopId) {
+        this.shopId = shopId;
     }
 }

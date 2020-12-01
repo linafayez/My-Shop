@@ -28,20 +28,18 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.google.gson.Gson;
-import com.shop.myshop.CategoryModel;
+import com.shop.myshop.Models.CategoryModel;
+import com.shop.myshop.Models.shopModel;
 import com.shop.myshop.ProductsModel;
 import com.shop.myshop.R;
+import com.shop.myshop.SharedPreference;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.Intent.EXTRA_ALLOW_MULTIPLE;
@@ -59,6 +57,8 @@ public class AddCategories extends Fragment {
     FirebaseFirestore db ;
     ProgressDialog pd;
     CategoryModel categoryModel;
+    SharedPreference sharedPreference;
+    shopModel shopModel;
     public AddCategories() {
         // Required empty public constructor
     }
@@ -73,6 +73,8 @@ public class AddCategories extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        sharedPreference = new SharedPreference(getContext());
+        shopModel = sharedPreference.getShop();
         mStorageRef = FirebaseStorage.getInstance().getReference("Category");
         db = FirebaseFirestore.getInstance();
         pd = new ProgressDialog(getContext());
@@ -169,6 +171,7 @@ public class AddCategories extends Fragment {
     }
     public void UploadFirebase(){
         categoryModel = new CategoryModel(""+uniqueID,name.getText().toString(),desc.getText().toString(),ImageLink);
+        categoryModel.setShopId(shopModel.getId());
         db.collection("Category").document(uniqueID)
                 .set(categoryModel)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

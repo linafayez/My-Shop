@@ -6,9 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -18,22 +16,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.shop.myshop.AdminActivity;
 import com.shop.myshop.MainActivity;
 import com.shop.myshop.R;
 import com.shop.myshop.SharedPreference;
-import com.shop.myshop.StartPage;
+import com.shop.myshop.Shop.HomePageShop;
 import com.shop.myshop.UserInfo;
+import com.shop.myshop.Models.shopModel;
 
 
 public class SignIn extends Fragment  {
@@ -123,6 +120,20 @@ public class SignIn extends Fragment  {
 
                             //finish();
                         }
+                        if ("Shop owner".equals(userInfo.getType())){
+                            db.collection("Shop").whereEqualTo("user",userInfo).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                @Override
+                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                    if(queryDocumentSnapshots!=null){
+                                        shopModel shop = queryDocumentSnapshots.toObjects(shopModel.class).get(0);
+                                        sharedPreference.SaveShop(shop);
+                                        Intent done = new Intent(getContext(), HomePageShop.class);
+                                        startActivity(done);
+                                    }
+                                }
+                            });
+
+                        }
                         email.setText("");
                         password.setText("");
                     }
@@ -131,11 +142,11 @@ public class SignIn extends Fragment  {
             });
         }
     }
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
-    }
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        // Check if user is signed in (non-null) and update UI accordingly.
+//        FirebaseUser currentUser = mAuth.getCurrentUser();
+//        updateUI(currentUser);
+//    }
 }

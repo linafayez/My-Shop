@@ -26,9 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.google.gson.Gson;
 import com.shop.myshop.AdsModel;
-import com.shop.myshop.CategoryModel;
 import com.shop.myshop.ProductsModel;
 import com.shop.myshop.R;
 import com.squareup.picasso.Picasso;
@@ -36,7 +34,6 @@ import com.squareup.picasso.Picasso;
 import java.util.Date;
 
 import static android.app.Activity.RESULT_OK;
-import static android.content.Intent.EXTRA_ALLOW_MULTIPLE;
 
 public class Ads extends Fragment {
 ImageView adsImage, edit, ok;

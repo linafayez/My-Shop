@@ -1,4 +1,7 @@
-package com.shop.myshop;
+package com.shop.myshop.Models;
+
+import com.shop.myshop.ProductsModel;
+import com.shop.myshop.UserInfo;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -29,14 +29,13 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.shop.myshop.R;
 import com.shop.myshop.SharedPreference;
-import com.shop.myshop.shopModel;
+import com.shop.myshop.Models.shopModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

@@ -2,11 +2,10 @@ package com.shop.myshop;
 
 
 import com.google.firebase.Timestamp;
+import com.shop.myshop.Models.shopModel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ProductsModel implements Serializable {
     private String name;
@@ -21,15 +20,12 @@ public class ProductsModel implements Serializable {
     private transient Timestamp time;
     private boolean haveAds;
     private int discount;
-    private float rating;
-    private ArrayList<String> note;
-
-
+    private shopModel shop;
     public ProductsModel() {
         setItemNumberInCart(0);
     }
 
-    public ProductsModel(String ID, String name, int price, String desc, int itemNumber, ArrayList<String> pic,Timestamp time, String category_id) {
+    public ProductsModel(String ID, String name, int price, String desc, int itemNumber, ArrayList<String> pic, Timestamp time, String category_id) {
         this.name = name;
         this.price = price;
         this.desc = desc;
@@ -52,7 +48,7 @@ public class ProductsModel implements Serializable {
         this.thumbnailPic = thumbnailPic;
     }
 
-//    public ProductsModel(Map<String, Object> map){
+    //    public ProductsModel(Map<String, Object> map){
 //
 //        this.name = ((String) map.get("name"));
 //        this.price =  map.get("price") != null? Integer.valueOf(map.get("price").toString()):0;
@@ -171,19 +167,11 @@ public class ProductsModel implements Serializable {
         this.discount = discount;
     }
 
-    public float getRating() {
-        return rating;
+    public shopModel getShop() {
+        return shop;
     }
 
-    public void setRating(float rating) {
-        this.rating = rating;
-    }
-
-    public ArrayList<String> getNote() {
-        return note;
-    }
-
-    public void setNote(ArrayList<String> note) {
-        this.note = note;
+    public void setShop(shopModel shop) {
+        this.shop = shop;
     }
 }

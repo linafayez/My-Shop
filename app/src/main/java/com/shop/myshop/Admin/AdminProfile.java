@@ -22,7 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.shop.myshop.CategoryDirections;
+//import com.shop.myshop.CategoryDirections;
 import com.shop.myshop.MainActivity;
 import com.shop.myshop.R;
 import com.shop.myshop.SharedPreference;
@@ -89,7 +89,7 @@ public class AdminProfile extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Navigation.findNavController(getView()).navigate(AdminProfileDirections.actionAdminProfileToAddCategories(null));
+             //   Navigation.findNavController(getView()).navigate(AdminProfileDirections.actionAdminProfileToAddCategories(null));
             }
         });
         AddProduct.setOnClickListener(new View.OnClickListener() {
@@ -131,13 +131,13 @@ public class AdminProfile extends Fragment {
         addPromoCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(getView()).navigate(R.id.action_adminProfile_to_addPromoCode);
+             //   Navigation.findNavController(getView()).navigate(R.id.action_adminProfile_to_addPromoCode);
             }
         });
     }
 
     private void goToCategory(String type) {
-        Navigation.findNavController(getView()).navigate(AdminProfileDirections.actionAdminProfileToCategory(type));
+       // Navigation.findNavController(getView()).navigate(AdminProfileDirections.actionAdminProfileToCategory(type));
     }
 
 }

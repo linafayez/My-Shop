@@ -38,12 +38,12 @@ public class Products extends AllProduct {
 
     }
 
-    @Override
-    public void onItemClick(ProductsModel product){
-        //        super.onItemClick(postion);
-        Navigation.findNavController(getView()).navigate(ProductsDirections.actionProductsToProductView(product));
-
-    }
+//    @Override
+//    public void onItemClick(ProductsModel product){
+//        //        super.onItemClick(postion);
+//        Navigation.findNavController(getView()).navigate(ProductsDirections.actionProductsToProductView(product));
+//
+//    }
 
     public static class Cart{
 

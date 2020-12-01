@@ -119,15 +119,15 @@ ProgressBar progressBar;
 
         public static void updateProducts( ProductsModel product , Float rating , String note,int position) {
          int a=0;
-         ArrayList<String> notes ;
-         if(product.getNote() == null) {
-             notes =new ArrayList<>();
-         }else {
-             notes = product.getNote();
-         }
-            notes.add(note);
-            product.setRating(rating);
-            product.setNote(notes);
+//         ArrayList<String> notes ;
+//         if(product.getNote() == null) {
+//             notes =new ArrayList<>();
+//         }else {
+//             notes = product.getNote();
+//         }
+//            notes.add(note);
+//            product.setRating(rating);
+//            product.setNote(notes);
 //            FirebaseFirestore.getInstance().collection("Products").document(pro.getID()).set(pro).addOnSuccessListener(new OnSuccessListener<Void>() {
 //                @Override
 //                public void onSuccess(Void aVoid) {
@@ -136,16 +136,16 @@ ProgressBar progressBar;
 //            });
             data.set(position,product);
 
-            if(models.size()>0){
-                product.setRating((product.getRating()+rating)/2);
-                for (int i = 0; i < models.size(); i++) {
-                    if (product.getID().equals(models.get(i).getID())){
-                        models.set(i,product);
-                        a=1;
-                        break;
-                    }
-                }
-            }
+//            if(models.size()>0){
+//                product.setRating((product.getRating()+rating)/2);
+//                for (int i = 0; i < models.size(); i++) {
+//                    if (product.getID().equals(models.get(i).getID())){
+//                        models.set(i,product);
+//                        a=1;
+//                        break;
+//                    }
+//                }
+//            }
             if(a==0){
                 models.add(product);
                 System.out.println("done1");

@@ -1,7 +1,6 @@
 package com.shop.myshop.Admin;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ClipData;
@@ -40,19 +39,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.google.gson.Gson;
-import com.shop.myshop.CategoryModel;
 import com.shop.myshop.ProductsModel;
 import com.shop.myshop.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
-import static java.lang.System.*;
 
 
 public class AddProduct extends Fragment {
@@ -116,11 +111,13 @@ public class AddProduct extends Fragment {
                 delete.setVisibility(View.INVISIBLE);
                 uniqueID = db.collection("Products").document().getId();
             } else {
+
                 category_id = product.getCategory_id();
                 textView.setText("Edit or delete product");
                 addImage.setText("Edit Image");
                 UploadProduct.setText("Update Data");
                 UploadProduct.setVisibility(View.VISIBLE);
+
                 name.setText(product.getName());
                 price.setText("" + product.getPrice() / 100.0);
                 desc.setText(product.getDesc());

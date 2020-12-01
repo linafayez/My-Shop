@@ -17,6 +17,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.shop.myshop.Models.*;
 import com.squareup.picasso.Picasso;
 
 public class Category extends Fragment {
@@ -24,6 +25,8 @@ RecyclerView recyclerView;
 FirebaseFirestore db;
 FirestoreRecyclerAdapter adapter;
 FirestoreRecyclerOptions<CategoryModel> options;
+SharedPreference sharedPreference;
+shopModel shopModel;
     public Category() {
         // Required empty public constructor
     }
@@ -38,6 +41,8 @@ FirestoreRecyclerOptions<CategoryModel> options;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        sharedPreference = new SharedPreference(getContext());
+        shopModel = sharedPreference.getShop();
         db = FirebaseFirestore.getInstance();
         recyclerView = view.findViewById(R.id.categories);
         Query query = db.collection("Category");

@@ -7,29 +7,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.littlemango.stacklayoutmanager.StackLayoutManager;
-import com.shop.myshop.OrderModel;
 import com.shop.myshop.R;
-import com.shop.myshop.User.OrderUser;
-import com.shop.myshop.shopModel;
-import com.shop.myshop.util.TextViewUtil;
-
-import java.util.ArrayList;
+import com.shop.myshop.Models.shopModel;
 
 public class AdminHomePage extends Fragment {
     TextView allOrders;

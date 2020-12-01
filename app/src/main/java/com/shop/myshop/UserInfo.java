@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 public class UserInfo implements Serializable {
     private String Name;
+
     private String Id;
     private String Type ;
     private String gender;

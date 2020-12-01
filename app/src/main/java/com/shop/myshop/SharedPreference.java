@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
+import com.shop.myshop.Models.shopModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,6 +46,37 @@ public class SharedPreference {
         }
 
         return user;
+    }
+    public  void SaveShop(shopModel model){
+        SharedPreferences shop;
+        SharedPreferences.Editor editorShop;
+        shop = context.getSharedPreferences("Shop", Context.MODE_PRIVATE);
+        editorShop = shop.edit();
+        Gson gson = new Gson();
+        String userString = gson.toJson(model);
+        editorShop.putString("Shop", userString);
+
+        editorShop.apply();
+    }
+
+    public shopModel getShop(){
+        SharedPreferences settings;
+        shopModel shopModel;
+
+        settings = context.getSharedPreferences("Shop",
+                Context.MODE_PRIVATE);
+
+        if (settings.contains("Shop")) {
+            String u = settings.getString("Shop", null);
+            Gson gson = new Gson();
+            shopModel = gson.fromJson(u,
+                    shopModel.class);
+
+        }else {
+            shopModel = null;
+        }
+
+        return shopModel;
     }
     public void SaveCart(List<ProductsModel> pro) {
         SharedPreferences settings;
