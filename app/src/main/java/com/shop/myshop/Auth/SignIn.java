@@ -136,6 +136,7 @@ public class SignIn extends Fragment  {
                         }
                         email.setText("");
                         password.setText("");
+                        login.setVisibility(View.VISIBLE);
                     }
 
                 }

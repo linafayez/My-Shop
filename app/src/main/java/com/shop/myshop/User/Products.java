@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.navigation.Navigation;
 
 import com.shop.myshop.Admin.AllProduct;
+import com.shop.myshop.Models.shopModel;
 import com.shop.myshop.ProductsModel;
 import com.shop.myshop.SharedPreference;
 
@@ -38,19 +39,21 @@ public class Products extends AllProduct {
 
     }
 
-//    @Override
-//    public void onItemClick(ProductsModel product){
-//        //        super.onItemClick(postion);
-//        Navigation.findNavController(getView()).navigate(ProductsDirections.actionProductsToProductView(product));
-//
-//    }
+    @Override
+    public void onItemClick(ProductsModel product){
+         //      super.onItemClick(postion);
+        Navigation.findNavController(getView()).navigate(ProductsDirections.actionProductsToProductView(product));
+
+    }
 
     public static class Cart{
 
         public static void AddToCart(Context context,ProductsModel productsModel) {
             SharedPreference sharedPreference = new SharedPreference(context);
             int b=0;
+            int s = 0;
             ArrayList<ProductsModel> arrayList = sharedPreference.getCartData();
+            ArrayList<shopModel> shops = sharedPreference.getAllShop();
             if(arrayList != null){
                 for(int i =0;i< arrayList.size();i++){
                     if(arrayList.get(i).getID().equals(productsModel.getID())){
@@ -58,13 +61,31 @@ public class Products extends AllProduct {
                         break;
                     }
                 }
+                if(shops!= null) {
+                    for (int i = 0; i < shops.size(); i++) {
+                    if(shops.get(i) != null && shops.get(i).getId() != null)
+                        if (shops.get(i).getId().equals(productsModel.getShop().getId())) {
+                            s = 1;
+                            break;
+                        }
+                    }
+                }
+            }
+            if(s==0){
+                sharedPreference.addShop(productsModel.getShop());
+                Toast.makeText(context, "Add shop ", Toast.LENGTH_LONG).show();
+            }else {
+                Toast.makeText(context, " shop from past "+sharedPreference.getAllShop().size(), Toast.LENGTH_LONG).show();
             }
             if(b==0) {
                 sharedPreference.addToCart( productsModel);
                 Toast.makeText(context, "Add to cart", Toast.LENGTH_LONG).show();
+
             }else{
-                Toast.makeText(context, " from past", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "product from past", Toast.LENGTH_LONG).show();
+
             }
+
         }
 
     }

@@ -39,8 +39,10 @@ import com.google.gson.Gson;
 import com.littlemango.stacklayoutmanager.StackLayoutManager;
 import com.shop.myshop.Admin.AllProduct;
 import com.shop.myshop.AdsModel;
+import com.shop.myshop.Models.shopModel;
 import com.shop.myshop.ProductsModel;
 import com.shop.myshop.R;
+import com.shop.myshop.SharedPreference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -62,6 +64,7 @@ ArrayList<AdsModel> adsList;
     ArrayList<ImageView> im= new ArrayList<>();
     ArrayList<Uri> mArrayUri = new ArrayList<Uri>();
     private ArrayList<String> id= new ArrayList<String>();
+    SharedPreference sharedPreference ;
     public MainPage() {
         // Required empty public constructor
     }
@@ -79,6 +82,9 @@ ArrayList<AdsModel> adsList;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+//      sharedPreference = new SharedPreference(getContext());
+//        sharedPreference.SaveCart(new ArrayList<ProductsModel>());
+//        sharedPreference.SaveAllShop(new ArrayList<shopModel>());
       //  bundle = new Bundle();
         adsList = new ArrayList<>();
         search = view.findViewById(R.id.s);

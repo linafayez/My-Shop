@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -37,10 +38,8 @@ public class AllProduct extends Fragment {
     FirestoreRecyclerOptions<ProductsModel> options;
     Query query;
     TextView productsType;
-//    Uri ImageUri;
-//    ImageView image;
-//    String imageString;
-//    Dialog Ads;
+    String type;
+
     public AllProduct() {
         // Required empty public constructor
     }
@@ -132,13 +131,14 @@ public class AllProduct extends Fragment {
     class ProductsHolders extends RecyclerView.ViewHolder {
         ImageView image;
         TextView name, price ,newPrice;
-       Button addToCart;
+      // Button addToCart;
+       FloatingActionButton addToCart;
         public ProductsHolders(@NonNull final View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.imageView4);
             name = itemView.findViewById(R.id.name);
             price = itemView.findViewById(R.id.price);
-            addToCart = itemView.findViewById(R.id.add);
+            addToCart = itemView.findViewById(R.id.floatingActionButton);
             newPrice = itemView.findViewById(R.id.newPrice);
             addToCart.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -148,54 +148,58 @@ public class AllProduct extends Fragment {
                 }
             });
             final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                // final String s= getArguments().getString("type");
+             type = AllProductArgs.fromBundle(getArguments()).getType();
+            if(type != "view"){
+                addToCart.setVisibility(View.INVISIBLE);
+            }
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     ProductsModel product = options.getSnapshots().get(getAdapterPosition());
-                //    onItemClick(product);
-                               }
+                    onItemClick(product);
+                }
             });
 
 
         }
     }
-//
-//    public void onItemClick(ProductsModel product){
-//
-//        String type = AllProductArgs.fromBundle(getArguments()).getType();
-//        if ( type.equals("editProduct") ) {
-//            goToAddProduct(product);
-//        }else if(type.equals("Ads")){
-//
-//           Navigation.findNavController(getView()).navigate(AllProductDirections.actionAllProductToAds(product));
-//          //  displayAlert(product);
-//        }else if(type.equals("view")){
-//            //          Navigation.findNavController(getView()).navigate(AllProductDirections.actionAllProductToProductView2(product));
-//        }else if(type.equals("deals")){
-//           Navigation.findNavController(getView()).navigate(AllProductDirections.actionAllProductToAddDeals(product));
-//        }
-//    }
-//    private void goToAddProduct(ProductsModel product) {
-//      Navigation.findNavController(getView()).navigate(AllProductDirections.actionAllProductToAddProduct(product,product.getCategory_id()));
-//    }
-//
-//    public void displayAlert(final ProductsModel product ){
-//
-//        new AlertDialog.Builder(getContext())
-//                .setTitle("Add Ads for product: "+product.getName())
-//                .setMessage("Do you wont add ads for this product?")
-//                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int id) {
-//              Navigation.findNavController(getView()).navigate(AllProductDirections.actionAllProductToAds(product));
-//                    }
-//                }).setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-//            public void onClick(DialogInterface dialog, int id) {
-//
-//            }
-//        })
-//                .show();
-//    }
+
+    public void onItemClick(ProductsModel product){
+
+
+        if ( type.equals("editProduct") ) {
+            goToAddProduct(product);
+        }else if(type.equals("Ads")){
+
+           Navigation.findNavController(getView()).navigate(AllProductDirections.actionAllProductToAds(product));
+          //  displayAlert(product);
+        }else if(type.equals("view")){
+            //          Navigation.findNavController(getView()).navigate(AllProductDirections.actionAllProductToProductView2(product));
+        }else if(type.equals("deals")){
+           Navigation.findNavController(getView()).navigate(AllProductDirections.actionAllProductToAddDeals(product));
+        }
+    }
+    private void goToAddProduct(ProductsModel product) {
+      Navigation.findNavController(getView()).navigate(AllProductDirections.actionAllProductToAddProduct(product,product.getCategory_id()));
+    }
+
+    public void displayAlert(final ProductsModel product ){
+
+        new AlertDialog.Builder(getContext())
+                .setTitle("Add Ads for product: "+product.getName())
+                .setMessage("Do you wont add ads for this product?")
+                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+              Navigation.findNavController(getView()).navigate(AllProductDirections.actionAllProductToAds(product));
+                    }
+                }).setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+
+            }
+        })
+                .show();
+    }
 
 }
 

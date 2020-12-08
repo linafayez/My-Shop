@@ -77,23 +77,24 @@ public LastProductAdapter(Context context,ArrayList<ProductsModel> productsModel
                 @Override
                 public void onClick(View v) {
                      productsModel = productsModels.get(getAdapterPosition());
-                    int b=0;
-                    ArrayList<ProductsModel> arrayList = sharedPreference.getCartData();
-                     if(arrayList != null){
-                         for(int i =0;i< arrayList.size();i++){
-                             if(arrayList.get(i).getID().equals(productsModel.getID())){
-                                 b=1;
-                                 break;
-                             }
-                         }
-                     }
-                    if(b==0) {
-                        sharedPreference.addToCart( productsModel);
-                        Toast.makeText(context, "Add to cart", Toast.LENGTH_LONG).show();
-                    }else{
-                        Toast.makeText(context, " from past", Toast.LENGTH_LONG).show();
-                    }
-
+                     Products.Cart.AddToCart(itemView.getContext(),productsModel);
+//                    int b=0;
+//                    ArrayList<ProductsModel> arrayList = sharedPreference.getCartData();
+//                     if(arrayList != null){
+//                         for(int i =0;i< arrayList.size();i++){
+//                             if(arrayList.get(i).getID().equals(productsModel.getID())){
+//                                 b=1;
+//                                 break;
+//                             }
+//                         }
+//                     }
+//                    if(b==0) {
+//                        sharedPreference.addToCart( productsModel);
+//                        Toast.makeText(context, "Add to cart", Toast.LENGTH_LONG).show();
+//                    }else{
+//                        Toast.makeText(context, " from past", Toast.LENGTH_LONG).show();
+//                    }
+//
                 }
             });
             itemView.setOnClickListener(new View.OnClickListener() {

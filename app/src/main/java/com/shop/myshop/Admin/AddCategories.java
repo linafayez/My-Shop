@@ -179,9 +179,9 @@ public class AddCategories extends Fragment {
                     public void onSuccess(Void aVoid) {
 
                         Toast.makeText(getActivity(),"done",Toast.LENGTH_SHORT).show();
-//                        pd.dismiss();
-                      //  Navigation.findNavController(getView()).navigateUp();
-                        Navigation.createNavigateOnClickListener(R.id.action_addCategories_to_category).onClick(getView());
+//
+
+                        Navigation.findNavController(getView()).navigate(AddCategoriesDirections.actionAddCategoriesToCategory("view"));
 
                     }
                 })

@@ -3,7 +3,7 @@
 
 
     <item
-        android:id="@+id/mainPage"
+        android:id="@+id/homePageUser"
         android:icon="@drawable/ic_baseline_home_24"
         android:title="Home" />
 
@@ -16,7 +16,7 @@
         android:icon="@drawable/ic_baseline_local_shipping_24"
         android:title="Orders" />
     <item
-        android:id="@+id/myCart"
+        android:id="@+id/allShopCarts"
         android:icon="@drawable/ic_baseline_shopping_cart_24"
         android:title="Cart" />
 

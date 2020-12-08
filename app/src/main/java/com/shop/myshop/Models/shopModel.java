@@ -16,8 +16,7 @@ public class shopModel implements Serializable {
     private String id;
     private String description;
     private String type;
-    private ArrayList<CategoryModel> categoryModels;
-    private ArrayList<ProductsModel> productsModels;
+
     public shopModel(){
 
     }
@@ -44,22 +43,6 @@ public class shopModel implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public ArrayList<CategoryModel> getCategoryModels() {
-        return categoryModels;
-    }
-
-    public void setCategoryModels(ArrayList<CategoryModel> categoryModels) {
-        this.categoryModels = categoryModels;
-    }
-
-    public ArrayList<ProductsModel> getProductsModels() {
-        return productsModels;
-    }
-
-    public void setProductsModels(ArrayList<ProductsModel> productsModels) {
-        this.productsModels = productsModels;
     }
 
     public String getType() {

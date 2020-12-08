@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -33,6 +34,8 @@ public class OrderUser extends Fragment {
     FirestoreRecyclerAdapter adapter;
     ArrayList<OrderModel> orderModels;
     FirestoreRecyclerOptions<OrderModel> options;
+    TextView text;
+    ProgressBar progressBar;
     public OrderUser() {
         // Required empty public constructor
     }
@@ -47,12 +50,19 @@ public class OrderUser extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        text = view.findViewById(R.id.textView27);
+        progressBar=  view.findViewById(R.id.progressBar8);
         order = view.findViewById(R.id.order);
         db = FirebaseFirestore.getInstance();
         Query query = db.collection("Orders").whereEqualTo("userId", FirebaseAuth.getInstance().getCurrentUser().getUid());
         options = new FirestoreRecyclerOptions.Builder<OrderModel>()
                 .setQuery(query,OrderModel.class)
                 .build();
+
+        if(options.getSnapshots().size()== 0){
+            text.setVisibility(View.VISIBLE);
+        }
+        progressBar.setVisibility(View.INVISIBLE);
         adapter = new FirestoreRecyclerAdapter<OrderModel, OrderViewHolder >(options){
 
             @NonNull

@@ -20,24 +20,6 @@
             app:destination="@id/viewOrderOfShop" />
     </fragment>
     <fragment
-        android:id="@+id/allOrders"
-        android:name="com.shop.myshop.Admin.allOrders"
-        android:label="fragment_all_orders"
-        tools:layout="@layout/fragment_all_orders" >
-        <action
-            android:id="@+id/action_allOrders_to_orderView"
-            app:destination="@id/orderView" />
-    </fragment>
-    <fragment
-        android:id="@+id/orderView"
-        android:name="com.shop.myshop.Admin.OrderView"
-        android:label="fragment_order_view"
-        tools:layout="@layout/fragment_order_view" >
-        <argument
-            android:name="order"
-            app:argType="com.shop.myshop.OrderModel" />
-    </fragment>
-    <fragment
         android:id="@+id/viewOrderOfShop"
         android:name="com.shop.myshop.Admin.ViewOrderOfShop"
         android:label="fragment_view_order_of_shop"

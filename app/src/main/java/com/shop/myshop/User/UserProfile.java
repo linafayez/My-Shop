@@ -90,6 +90,7 @@ public class UserProfile extends Fragment {
                     public void onClick(DialogInterface dialog, int id) {
 
                         sharedPreference.addUser(null);
+                        sharedPreference.SaveShop(null);
                         FirebaseAuth.getInstance().signOut();
                         Intent i = new Intent(getActivity(),
                                 StartPage.class);

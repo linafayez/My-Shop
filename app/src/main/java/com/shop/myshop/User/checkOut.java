@@ -44,6 +44,7 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 import com.robinhood.ticker.TickerUtils;
 import com.robinhood.ticker.TickerView;
+import com.shop.myshop.Models.shopModel;
 import com.shop.myshop.OrderModel;
 import com.shop.myshop.ProductsModel;
 import com.shop.myshop.R;
@@ -69,8 +70,8 @@ public class checkOut extends Fragment {
     String  uniqueID;
     double longitude;
     FirebaseFirestore db ;
-    static TextView total, subTotal, shipping, address;
-
+    static TextView subTotal, shipping, address;
+    shopModel shop;
     public checkOut() {
         // Required empty public constructor
     }
@@ -98,6 +99,7 @@ public class checkOut extends Fragment {
         addAdders = view.findViewById(R.id.addAdders);
         shipping = view.findViewById(R.id.shipping);
         address = view.findViewById(R.id.address);
+        shop = checkOutArgs.fromBundle(getArguments()).getShop();
         sharedPreference = new SharedPreference(getContext());
         data = new ArrayList<>();
         data = sharedPreference.getCartData();
@@ -123,6 +125,7 @@ public class checkOut extends Fragment {
                 date = new Date();
                 Timestamp timestamp = new Timestamp(date);
                 if (longitude != 0.0 && latitude != 0.0) {
+                    Order.setVisibility(View.INVISIBLE);
                     orderModel = new OrderModel(latitude, longitude, data, tickerView.getText(), FirebaseAuth.getInstance().getCurrentUser().getUid(), note.getText().toString());
                     orderModel.setTime(timestamp);
                     orderModel.setState("Confirmed");
@@ -186,12 +189,14 @@ public class checkOut extends Fragment {
 
     private void UploadOrder(OrderModel orderModel) {
         orderModel.setId(uniqueID);
+        orderModel.setShopId(shop.getId());
         db.collection("Orders").document(uniqueID).set(orderModel).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 updateProducts(orderModel.getProductsModels());
                 Navigation.findNavController(getView()).navigate(R.id.action_checkOut_to_orderUser);
                 sharedPreference.SaveCart(new ArrayList<ProductsModel>());
+                sharedPreference.SaveAllShop(new ArrayList<>());
             }
         });
     }

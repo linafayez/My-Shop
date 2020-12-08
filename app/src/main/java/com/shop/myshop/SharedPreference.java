@@ -78,6 +78,43 @@ public class SharedPreference {
 
         return shopModel;
     }
+
+    public ArrayList<shopModel> getAllShop(){
+        SharedPreferences settings;
+        List<shopModel> shopModels;
+        settings = context.getSharedPreferences("AllShops",
+                Context.MODE_PRIVATE);
+        if (settings.contains("shops")) {
+            String u = settings.getString("shops", null);
+            Gson gson = new Gson();
+            shopModel[] shopCart = gson.fromJson(u,
+                    shopModel[].class);
+
+            shopModels = Arrays.asList(shopCart);
+            shopModels = new ArrayList<shopModel>(shopModels);
+        } else
+            return new ArrayList<>();
+
+        return (ArrayList<shopModel>) shopModels;
+    }
+    public void SaveAllShop(ArrayList<shopModel> models){
+        SharedPreferences shop;
+        SharedPreferences.Editor editorShop;
+        shop = context.getSharedPreferences("AllShops", Context.MODE_PRIVATE);
+        editorShop = shop.edit();
+        Gson gson = new Gson();
+        String ShopString = gson.toJson(models);
+        editorShop.putString("shops", ShopString);
+        editorShop.apply();
+    }
+    public void addShop(shopModel model){
+        ArrayList<shopModel> ModelList = getAllShop();
+        if (ModelList == null )
+            ModelList = new ArrayList<shopModel>();
+        ModelList.add(model);
+        SaveAllShop(ModelList);
+    }
+
     public void SaveCart(List<ProductsModel> pro) {
         SharedPreferences settings;
         SharedPreferences.Editor editor;
@@ -121,7 +158,7 @@ public class SharedPreference {
             productModels = Arrays.asList(cartItem);
             productModels = new ArrayList<ProductsModel>(productModels);
         } else
-            return null;
+            return new ArrayList<>();
 
         return (ArrayList<ProductsModel>) productModels;
     }

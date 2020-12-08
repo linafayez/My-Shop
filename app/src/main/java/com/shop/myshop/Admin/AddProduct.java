@@ -39,8 +39,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.shop.myshop.Models.shopModel;
 import com.shop.myshop.ProductsModel;
 import com.shop.myshop.R;
+import com.shop.myshop.SharedPreference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -72,6 +74,8 @@ public class AddProduct extends Fragment {
     FirebaseFirestore db ;
     ProgressDialog pd;
    ProductsModel product;
+   shopModel shopModel;
+   SharedPreference sharedPreference;
     public AddProduct() {
         // Required empty public constructor
     }
@@ -85,6 +89,8 @@ public class AddProduct extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        sharedPreference = new SharedPreference(getContext());
+        shopModel = sharedPreference.getShop();
         db = FirebaseFirestore.getInstance();
         date = new Date();
         switchImage = view.findViewById(R.id.switchImage);
@@ -131,6 +137,8 @@ public class AddProduct extends Fragment {
 
 
             }
+       // Toast.makeText(getContext(),shopModel.getName(),Toast.LENGTH_LONG).show();
+
 
         addImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,6 +160,7 @@ public class AddProduct extends Fragment {
         UploadProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 UploadProduct.setVisibility(View.INVISIBLE);
                 progressBar.setVisibility(View.VISIBLE);
                 UploadImage();
@@ -313,6 +322,7 @@ public class AddProduct extends Fragment {
         //     Toast.makeText(getActivity(),""+P,Toast.LENGTH_SHORT).show();
         product = new ProductsModel(uniqueID,
                 name.getText().toString(),P,desc.getText().toString(),Integer.parseInt(itemNumber.getText().toString()),listImage,timestamp,category_id);
+        product.setShop(shopModel);
         db.collection("Products").document(uniqueID)
                 .set(product)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

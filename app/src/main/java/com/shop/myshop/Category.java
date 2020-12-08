@@ -45,7 +45,7 @@ shopModel shopModel;
         shopModel = sharedPreference.getShop();
         db = FirebaseFirestore.getInstance();
         recyclerView = view.findViewById(R.id.categories);
-        Query query = db.collection("Category");
+        Query query = db.collection("Category").whereEqualTo("shopId",shopModel.getId());
         options = new FirestoreRecyclerOptions.Builder<CategoryModel>()
                 .setQuery(query,CategoryModel.class)
                 .build();

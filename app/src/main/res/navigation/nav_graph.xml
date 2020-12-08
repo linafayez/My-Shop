@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainPage">
+    app:startDestination="@id/homePageUser">
 
 
     <fragment
@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_myCart_to_checkOut"
             app:destination="@id/checkOut" />
+        <argument
+            android:name="shop"
+            app:argType="com.shop.myshop.Models.shopModel" />
     </fragment>
     <fragment
         android:id="@+id/userCategory"
@@ -85,6 +88,9 @@
             app:launchSingleTop="true"
             app:popUpTo="@id/myCart"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="shop"
+            app:argType="com.shop.myshop.Models.shopModel" />
     </fragment>
     <activity
         android:id="@+id/map"
@@ -152,4 +158,18 @@
         android:name="com.shop.myshop.User.requestPage"
         android:label="fragment_request_page"
         tools:layout="@layout/fragment_request_page" />
+    <fragment
+        android:id="@+id/allShopCarts"
+        android:name="com.shop.myshop.User.AllShopCarts"
+        android:label="fragment_all_shop_carts"
+        tools:layout="@layout/fragment_all_shop_carts" >
+        <action
+            android:id="@+id/action_allShopCarts_to_myCart"
+            app:destination="@id/myCart" />
+    </fragment>
+    <fragment
+        android:id="@+id/homePageUser"
+        android:name="com.shop.myshop.User.HomePageUser"
+        android:label="fragment_home_page_user"
+        tools:layout="@layout/fragment_home_page_user" />
 </navigation>

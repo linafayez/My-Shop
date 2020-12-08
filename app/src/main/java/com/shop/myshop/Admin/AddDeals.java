@@ -73,11 +73,12 @@ product = AddDealsArgs.fromBundle(getArguments()).getProduct();
          @Override
          public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
              if(event == null || !event.isShiftPressed()) {
-//                 dis = Integer.parseInt(discount.getText().toString());
+                 dis = Integer.parseInt(discount.getText().toString());
 //                  pr-= pr*(dis/100.0);
                  newPrice.setText(TextViewUtil.getDiscountToDisplay(product.getPrice(),dis,1));
                  return true;
              }else {
+                 newPrice.setText(TextViewUtil.getDiscountToDisplay(product.getPrice(),dis,1));
                  return false;
              }
          }

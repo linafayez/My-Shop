@@ -32,14 +32,13 @@
 
         <TextView
             android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="59dp"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="8dp"
-            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
+           android:layout_marginLeft="120dp"
+            android:layout_marginRight="50dp"
             android:maxLines="2"
-            android:paddingLeft="5dp"
-            android:singleLine="false"
+            android:textAlignment="center"
             android:text=" product name"
             android:textSize="20dp"
             app:fontFamily="sans-serif-black"
@@ -52,15 +51,13 @@
             android:id="@+id/price"
             android:layout_width="wrap_content"
             android:layout_height="59dp"
-            android:layout_marginTop="8dp"
             android:gravity="center"
             android:text="10JD"
             android:textColor="#e80505"
             android:textSize="17dp"
             app:fontFamily="sans-serif-black"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/productImage"
-            app:layout_constraintTop_toBottomOf="@+id/name" />
+            app:layout_constraintStart_toEndOf="@+id/productImage" />
 
         <ImageView
 
@@ -129,7 +126,6 @@
             android:id="@+id/newPrice"
             android:layout_width="wrap_content"
             android:layout_height="59dp"
-            android:layout_marginTop="8dp"
             android:gravity="center"
             android:text="10JD"
             android:textColor="#000"
@@ -138,9 +134,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/linearLayout"
 
-            app:layout_constraintStart_toEndOf="@+id/price"
-            app:layout_constraintTop_toBottomOf="@+id/name"
-             />
+            app:layout_constraintStart_toEndOf="@+id/price" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

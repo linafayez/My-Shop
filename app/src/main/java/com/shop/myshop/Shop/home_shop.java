@@ -49,7 +49,6 @@ public class home_shop extends Fragment {
         });
         editProduct= view.findViewById(R.id.editProduct);
      //   newPromoCode = view.findViewById(R.id.promoCode);
-        newCategory= view.findViewById(R.id.newCategory);
         editCategory = view.findViewById(R.id.editCategory);
         Ads = view.findViewById(R.id.newAds);
 

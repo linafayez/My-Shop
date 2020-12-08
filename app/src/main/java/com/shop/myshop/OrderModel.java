@@ -16,6 +16,7 @@ public class OrderModel implements Serializable {
     private String state;
     private String feedbackId;
     private transient Timestamp time;
+    private String shopId;
     public OrderModel(){}
 
     public OrderModel( double latitude, double longitude, ArrayList<ProductsModel> productsModels, String total, String UserId, String note) {
@@ -106,5 +107,13 @@ public class OrderModel implements Serializable {
 
     public void setFeedbackId(String feedbackId) {
         this.feedbackId = feedbackId;
+    }
+
+    public String getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(String shopId) {
+        this.shopId = shopId;
     }
 }

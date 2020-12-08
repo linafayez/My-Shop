@@ -14,6 +14,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.shop.myshop.Models.shopModel;
 import com.shop.myshop.ProductsModel;
 import com.shop.myshop.R;
 import com.shop.myshop.SharedPreference;
@@ -24,10 +25,11 @@ import java.util.ArrayList;
 public class MyCart extends Fragment {
     RecyclerView cart;
     CartAdapter adapter;
-    ArrayList<ProductsModel> data;
+    ArrayList<ProductsModel> data, shopProduct;
     SharedPreference sharedPreference;
     Button checkout;
 static TextView total;
+shopModel shop;
     public MyCart() {
         // Required empty public constructor
     }
@@ -45,11 +47,18 @@ static TextView total;
         total = view.findViewById(R.id.total);
         cart = view.findViewById(R.id.cartRe);
         sharedPreference = new SharedPreference(getContext());
+        shop = MyCartArgs.fromBundle(getArguments()).getShop();
+        shopProduct = new ArrayList<>();
         data = new ArrayList<>();
         data = sharedPreference.getCartData();
+        for(int i =0;i<data.size();i++){
+            if(data.get(i).getShop().getId().equals(shop.getId())){
+                shopProduct.add(data.get(i));
+            }
+        }
        // Toast.makeText(getContext(), data.size() + "", Toast.LENGTH_LONG).show();
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
-        changed.setTotal(data);
+        changed.setTotal(shopProduct);
         adapter = new CartAdapter(getContext(), data);
         cart.setLayoutManager(manager);
         cart.setHasFixedSize(false);
@@ -58,7 +67,7 @@ static TextView total;
         checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            Navigation.findNavController(getView()).navigate(MyCartDirections.actionMyCartToCheckOut());
+            Navigation.findNavController(getView()).navigate(MyCartDirections.actionMyCartToCheckOut(shop));
             }
         });
     }

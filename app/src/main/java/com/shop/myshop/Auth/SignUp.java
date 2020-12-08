@@ -15,21 +15,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-import com.google.android.gms.tasks.OnCompleteListener;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.shop.myshop.AdminActivity;
 import com.shop.myshop.MainActivity;
 import com.shop.myshop.R;
 import com.shop.myshop.SharedPreference;
 import com.shop.myshop.UserInfo;
-
-import java.util.concurrent.Executor;
 
 
 public class SignUp extends Fragment {
@@ -39,6 +35,7 @@ public class SignUp extends Fragment {
     ProgressBar progressBar;
    UserInfo userdata = new UserInfo();
    FirebaseFirestore db = FirebaseFirestore.getInstance();
+   SharedPreference sharedPreference;
     public SignUp() {
         // Required empty public constructor
     }
@@ -53,6 +50,7 @@ public class SignUp extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        sharedPreference = new SharedPreference(getContext());
        login = view.findViewById(R.id.button4);
         name = view.findViewById(R.id.editTextTextPersonName);
         phone = view.findViewById(R.id.editTextPhone);
@@ -65,7 +63,7 @@ public class SignUp extends Fragment {
        login.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-              if(Navigation.findNavController(view).navigateUp());
+              Navigation.findNavController(getView()).navigateUp();
                 //  Toast.makeText(getContext(),"kjhg",Toast.LENGTH_LONG).show();
            }
        });
@@ -96,7 +94,7 @@ public class SignUp extends Fragment {
               mAuth.createUserWithEmailAndPassword(e,p).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                   @Override
                   public void onSuccess(AuthResult authResult) {
-                    regester(mAuth.getCurrentUser());
+                    newUser(mAuth.getCurrentUser());
 
                   }
               }).addOnFailureListener(new OnFailureListener() {
@@ -113,7 +111,7 @@ public class SignUp extends Fragment {
             }
         }
     }
-    private void regester(@Nullable final FirebaseUser user){
+    private void newUser(@Nullable final FirebaseUser user){
         userdata.setEmail(email.getText().toString());
         assert user != null;
         userdata.setId(user.getUid());
@@ -123,6 +121,7 @@ public class SignUp extends Fragment {
         db.collection("User").document(user.getUid()).set(userdata).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
+                sharedPreference.addUser(userdata);
                 Toast.makeText(getActivity(),"done",Toast.LENGTH_SHORT).show();
                 updateUI(user);
             }
