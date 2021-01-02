@@ -136,7 +136,7 @@ ArrayList<AdsModel> adsList;
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         lastProList.add(document.toObject(ProductsModel.class));
                     }
-                    ProAdapter = new LastProductAdapter(getContext(),lastProList);
+                    ProAdapter = new LastProductAdapter(getContext(),lastProList,"main");
                    // RecyclerView.LayoutManager manager =new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false);
                     RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
                     lastPro.setLayoutManager(layoutManager);
@@ -153,7 +153,7 @@ ArrayList<AdsModel> adsList;
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         lastDealsProducts.add(document.toObject(ProductsModel.class));
                     }
-                    ProAdapter = new LastProductAdapter(getContext(),lastDealsProducts);
+                    ProAdapter = new LastProductAdapter(getContext(),lastDealsProducts,"main");
                   RecyclerView.LayoutManager manager =new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false);
                 //    RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
                     lastDeals.setLayoutManager(manager);

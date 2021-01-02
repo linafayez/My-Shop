@@ -26,11 +26,13 @@ import java.util.ArrayList;
 public class LastProductAdapter extends RecyclerView.Adapter<LastProductAdapter.LastViewHolder> {
 ArrayList<ProductsModel> productsModels;
     Context context;
+    String v;
     SharedPreference sharedPreference ;
-public LastProductAdapter(Context context,ArrayList<ProductsModel> productsModels){
+public LastProductAdapter(Context context,ArrayList<ProductsModel> productsModels,String v){
     this.context = context;
     this.productsModels = productsModels;
     sharedPreference = new SharedPreference(context);
+    this.v =v;
 }
     @NonNull
     @Override
@@ -101,7 +103,12 @@ public LastProductAdapter(Context context,ArrayList<ProductsModel> productsModel
                 @Override
                 public void onClick(View v) {
                     productsModel = productsModels.get(getAdapterPosition());
-                    Navigation.findNavController(itemView).navigate(MainPageDirections.actionMainPageToProductView(productsModel));
+                    if (v.equals("main")){
+                        Navigation.findNavController(itemView).navigate(MainPageDirections.actionMainPageToProductView(productsModel));
+                }else{
+                        Navigation.findNavController(itemView).navigate(HomePageUserDirections.actionHomePageUserToProductView(productsModel));
+
+                    }
                 }
             });
 

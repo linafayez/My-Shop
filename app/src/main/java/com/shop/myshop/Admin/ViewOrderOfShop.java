@@ -15,9 +15,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.littlemango.stacklayoutmanager.StackLayoutManager;
+import com.shop.myshop.Models.shopModel;
 import com.shop.myshop.R;
 import com.shop.myshop.User.AdsAdapter;
-import com.shop.myshop.shopModel;
+
 import com.squareup.picasso.Picasso;
 
 

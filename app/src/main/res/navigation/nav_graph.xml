@@ -171,5 +171,9 @@
         android:id="@+id/homePageUser"
         android:name="com.shop.myshop.User.HomePageUser"
         android:label="fragment_home_page_user"
-        tools:layout="@layout/fragment_home_page_user" />
+        tools:layout="@layout/fragment_home_page_user" >
+        <action
+            android:id="@+id/action_homePageUser_to_productView"
+            app:destination="@id/productView" />
+    </fragment>
 </navigation>

@@ -59,11 +59,9 @@ public class OrderUser extends Fragment {
                 .setQuery(query,OrderModel.class)
                 .build();
 
-        if(options.getSnapshots().size()== 0){
-            text.setVisibility(View.VISIBLE);
-        }
         progressBar.setVisibility(View.INVISIBLE);
         adapter = new FirestoreRecyclerAdapter<OrderModel, OrderViewHolder >(options){
+
 
             @NonNull
             @Override
@@ -92,6 +90,11 @@ public class OrderUser extends Fragment {
     public void onStart() {
         super.onStart();
         adapter.startListening();
+        if(options.getSnapshots().size()> 0){
+            text.setVisibility(View.VISIBLE);
+        }else{
+            text.setVisibility(View.INVISIBLE);
+        }
 
     }
 
